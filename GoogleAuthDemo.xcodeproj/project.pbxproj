@@ -21,6 +21,8 @@
 		1B781648197C39800043664B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B78162A197C39800043664B /* UIKit.framework */; };
 		1B781650197C39800043664B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B78164E197C39800043664B /* InfoPlist.strings */; };
 		1B781652197C39800043664B /* GoogleAuthDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781651197C39800043664B /* GoogleAuthDemoTests.m */; };
+		1B781660197C3C150043664B /* GADGoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B78165F197C3C150043664B /* GADGoogleOAuth.m */; };
+		1B781665197C4AD60043664B /* ZHHHandyMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781664197C4AD60043664B /* ZHHHandyMacros.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,10 @@
 		1B78164D197C39800043664B /* GoogleAuthDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleAuthDemoTests-Info.plist"; sourceTree = "<group>"; };
 		1B78164F197C39800043664B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1B781651197C39800043664B /* GoogleAuthDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoogleAuthDemoTests.m; sourceTree = "<group>"; };
+		1B78165E197C3C150043664B /* GADGoogleOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADGoogleOAuth.h; path = Views/GADGoogleOAuth.h; sourceTree = "<group>"; };
+		1B78165F197C3C150043664B /* GADGoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GADGoogleOAuth.m; path = Views/GADGoogleOAuth.m; sourceTree = "<group>"; };
+		1B781663197C4AD60043664B /* ZHHHandyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHHHandyMacros.h; sourceTree = "<group>"; };
+		1B781664197C4AD60043664B /* ZHHHandyMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHHHandyMacros.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +88,7 @@
 		1B78161A197C39800043664B = {
 			isa = PBXGroup;
 			children = (
+				1B781662197C4AD60043664B /* ZHHHandyMacros */,
 				1B78162C197C39800043664B /* GoogleAuthDemo */,
 				1B78164B197C39800043664B /* GoogleAuthDemoTests */,
 				1B781625197C39800043664B /* Frameworks */,
@@ -117,6 +124,7 @@
 				1B781638197C39800043664B /* Main.storyboard */,
 				1B78163B197C39800043664B /* GADViewController.h */,
 				1B78163C197C39800043664B /* GADViewController.m */,
+				1B781661197C3C190043664B /* Views */,
 				1B78163E197C39800043664B /* Images.xcassets */,
 				1B78162D197C39800043664B /* Supporting Files */,
 			);
@@ -150,6 +158,24 @@
 				1B78164E197C39800043664B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1B781661197C3C190043664B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1B78165E197C3C150043664B /* GADGoogleOAuth.h */,
+				1B78165F197C3C150043664B /* GADGoogleOAuth.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		1B781662197C4AD60043664B /* ZHHHandyMacros */ = {
+			isa = PBXGroup;
+			children = (
+				1B781663197C4AD60043664B /* ZHHHandyMacros.h */,
+				1B781664197C4AD60043664B /* ZHHHandyMacros.m */,
+			);
+			path = ZHHHandyMacros;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,6 +277,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B781633197C39800043664B /* main.m in Sources */,
+				1B781660197C3C150043664B /* GADGoogleOAuth.m in Sources */,
+				1B781665197C4AD60043664B /* ZHHHandyMacros.m in Sources */,
 				1B78163D197C39800043664B /* GADViewController.m in Sources */,
 				1B781637197C39800043664B /* GADAppDelegate.m in Sources */,
 			);
