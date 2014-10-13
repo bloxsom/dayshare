@@ -19,7 +19,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.navigationItem.title = @"Google OAuth2.0 Demo";
+    self.navigationItem.title = @"DayShare";
     
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
@@ -31,6 +31,8 @@
     
     _googleOAuth = [[GADGoogleOAuth alloc] initWithFrame:self.view.frame];
     [_googleOAuth setGOAuthDelegate:self];
+    
+    [self showProfile:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,16 +61,16 @@
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell setAccessoryType:UITableViewCellAccessoryNone];
         
-        [[cell textLabel] setFont:[UIFont fontWithName:@"Trebuchet MS" size:15.0]];
+        [[cell textLabel] setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
         [[cell textLabel] setShadowOffset:CGSizeMake(1.0, 1.0)];
         [[cell textLabel] setShadowColor:[UIColor whiteColor]];
         
-        [[cell detailTextLabel] setFont:[UIFont fontWithName:@"Trebuchet MS" size:13.0]];
+        [[cell detailTextLabel] setFont:[UIFont fontWithName:@"Helvetica" size:13.0]];
         [[cell detailTextLabel] setTextColor:[UIColor grayColor]];
     }
     
     [[cell textLabel] setText:[_arrProfileInfo objectAtIndex:[indexPath row]]];
-    [[cell detailTextLabel] setText:[_arrProfileInfoLabel objectAtIndex:[indexPath row]]];
+//    [[cell detailTextLabel] setText:[_arrProfileInfoLabel objectAtIndex:[indexPath row]]];
     
     return cell;
 }
@@ -81,10 +83,10 @@
 
 
 - (IBAction)showProfile:(id)sender {
-    [_googleOAuth authorizeUserWithClienID:@"809936157196-1s35hlcnrj08i4s06n8i3vm8142ee4is.apps.googleusercontent.com"
-                           andClientSecret:@"rmJCGor3JxaPhAIY3BXND3mn"
+    [_googleOAuth authorizeUserWithClienID:@"878770239271-p5cul9k5egrfn9t14rdtd1rtstb1cknn.apps.googleusercontent.com"
+                           andClientSecret:@"8nwUU5LwKQClq444o7Rbkjg7"
                              andParentView:self.view
-                                 andScopes:[NSArray arrayWithObjects:@"https://www.googleapis.com/auth/userinfo.profile", nil]
+                                 andScopes:[NSArray arrayWithObjects:@"https://www.googleapis.com/auth/calendar.readonly", nil]
      ];
 }
 
@@ -93,7 +95,7 @@
 }
 
 -(void)authorizationWasSuccessful{
-    [_googleOAuth callAPI:@"https://www.googleapis.com/oauth2/v1/userinfo"
+    [_googleOAuth callAPI:@"https://www.googleapis.com/calendar/v3/users/me/calendarList"
            withHttpMethod:httpMethod_GET
        postParameterNames:nil postParameterValues:nil];
 }
@@ -121,30 +123,18 @@
 }
 
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
-    if ([responseJSONAsString rangeOfString:@"family_name"].location != NSNotFound) {
-        NSError *error;
-        NSMutableDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseJSONAsData
-                                                                          options:NSJSONReadingMutableContainers
-                                                                            error:&error];
-        if (error) {
-            NSLog(@"An error occured while converting JSON data to dictionary.");
-            return;
-        }
-        else{
-            if (_arrProfileInfoLabel != nil) {
-                _arrProfileInfoLabel = nil;
-                _arrProfileInfo = nil;
-                _arrProfileInfo = [[NSMutableArray alloc] init];
-            }
-            
-            _arrProfileInfoLabel = [[NSMutableArray alloc] initWithArray:[dictionary allKeys] copyItems:YES];
-            for (int i=0; i<[_arrProfileInfoLabel count]; i++) {
-                [_arrProfileInfo addObject:[dictionary objectForKey:[_arrProfileInfoLabel objectAtIndex:i]]];
-            }
-            
-            [_tableView reloadData];
-        }
+    NSLog(@"");
+    NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData
+                                                                      options:NSJSONReadingMutableContainers
+                                                                        error:nil];
+    NSMutableArray *arr = [dict valueForKey:@"items"];
+    _arrProfileInfo = [[NSMutableArray alloc] init];
+    for (int i=0; i<[arr count]; i++) {
+        [_arrProfileInfo addObject:[[arr objectAtIndex:i] valueForKey:@"summary" ]];
     }
+
+    [_tableView reloadData];
+    self.navigationItem.title = @"Select a calendar";
 }
 
 @end
