@@ -84,11 +84,11 @@
         [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
         [cell setAccessoryType:UITableViewCellAccessoryNone];
         
-        [[cell textLabel] setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
+        [[cell textLabel] setFont:[UIFont fontWithName:@"Helvetica Neue" size:15.0]];
         [[cell textLabel] setShadowOffset:CGSizeMake(1.0, 1.0)];
         [[cell textLabel] setShadowColor:[UIColor whiteColor]];
         
-        [[cell detailTextLabel] setFont:[UIFont fontWithName:@"Helvetica" size:13.0]];
+        [[cell detailTextLabel] setFont:[UIFont fontWithName:@"Helvetica Neue" size:13.0]];
         [[cell detailTextLabel] setTextColor:[UIColor grayColor]];
     }
     

@@ -7,9 +7,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *profileButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revokeAccessButton;
 
-@property (nonatomic, strong) NSMutableArray *calendarsArray;
-@property (nonatomic, strong) NSMutableArray *arrProfileInfo;
-@property (nonatomic, strong) NSMutableArray *arrProfileInfoLabel;
+@property (nonatomic, strong) NSMutableArray *arrDays;
+@property (nonatomic, strong) NSMutableArray *arrDayLabels;
 @property (nonatomic, strong) GADGoogleOAuth *googleOAuth;
 
 @property(nonatomic) NSString *calendarID;

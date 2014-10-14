@@ -26,18 +26,20 @@
     UIEdgeInsets contentInset = _tableView.contentInset;
     contentInset.bottom = _toolBar.bounds.size.height;
     [_tableView setContentInset:contentInset];
-    _arrProfileInfo = [[NSMutableArray alloc] init];
-    _arrProfileInfoLabel = [[NSMutableArray alloc] init];
-    _calendarsArray = [[NSMutableArray alloc] init];
+    _arrDayLabels = [[NSMutableArray alloc] init];
+    _arrDays = [[NSMutableArray alloc] init];
     
     
     _googleOAuth = [[GADGoogleOAuth alloc] initWithFrame:self.view.frame];
     [_googleOAuth setGOAuthDelegate:self];
 
+    [self setupDates];
+}
+
+- (void)setupDates {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
     NSDate *now = [NSDate date];
-    NSString *nowString = [dateFormatter stringFromDate:now];
     NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
     NSUInteger preservedComponents = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit);
     NSDate *date = [calendar dateFromComponents:[calendar components:preservedComponents fromDate:now]];
@@ -53,10 +55,23 @@
     
     NSString *tomorrow = [dateFormatter stringFromDate:tomorrowMidnight];
     
-    _timeStart = today;
-    _timeEnd = tomorrow;
+    NSDateFormatter *dayNameFormatter = [[NSDateFormatter alloc] init];
+    [dayNameFormatter setDateFormat:@"EEEE - MM/dd/y"];
     
-    [self authorize];
+    [_arrDayLabels addObject: @"Today"];
+    [_arrDays addObject: [NSArray arrayWithObjects:today, tomorrow, nil]];
+    
+    for (int i = 0; i < 7; i++) {
+        NSDate *current = [[NSCalendar currentCalendar] dateFromComponents:comps];
+        comps.day = comps.day + 1;
+        NSDate *next = [[NSCalendar currentCalendar] dateFromComponents:comps];
+        NSString *dayName = [dayNameFormatter stringFromDate:current];
+        NSString *currentString = [dateFormatter stringFromDate:current];
+        NSString *nextString = [dateFormatter stringFromDate:next];
+        [_arrDays addObject: [NSArray arrayWithObjects:currentString, nextString, nil]];
+        [_arrDayLabels addObject:dayName];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,7 +86,7 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [_arrProfileInfo count];
+    return [_arrDayLabels count];
 }
 
 - (void) authorize {
@@ -83,12 +98,11 @@
 }
 
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *)path {
-    //    NSLog(@"%i", path.row);
     NSInteger row = (NSInteger)path.row;
-    //    NSLog(@"%s", _calendarsArray[row]);
-    NSString *cal_id = [_calendarsArray[row] valueForKey:@"etag"];
-    NSLog(@"%@", cal_id);
+    _timeStart = [_arrDays objectAtIndex:row][0];
+    _timeEnd = [_arrDays objectAtIndex:row][1];
     [tableView deselectRowAtIndexPath:path animated:true];
+    [self authorize];
 }
 
 
@@ -110,7 +124,7 @@
         [[cell detailTextLabel] setTextColor:[UIColor grayColor]];
     }
     
-    [[cell textLabel] setText:[_arrProfileInfo objectAtIndex:[indexPath row]]];
+    [[cell textLabel] setText:[_arrDayLabels objectAtIndex:[indexPath row]]];
     //    [[cell detailTextLabel] setText:[_arrProfileInfoLabel objectAtIndex:[indexPath row]]];
     
     return cell;
@@ -141,8 +155,8 @@
                                                    delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
     
-    [_arrProfileInfo removeAllObjects];
-    [_arrProfileInfoLabel removeAllObjects];
+//    [_arrProfileInfo removeAllObjects];
+//    [_arrProfileInfoLabel removeAllObjects];
     
     [_tableView reloadData];
 }
@@ -164,8 +178,8 @@
                                                                   error:nil];
     
     NSLog(@"%@", responseJSONAsString);
-    _calendarsArray = [dict valueForKey:@"items"];
-    _arrProfileInfo = [[NSMutableArray alloc] init];
+//    _calendarsArray = [dict valueForKey:@"items"];
+//    _arrProfileInfo = [[NSMutableArray alloc] init];
     
     [_tableView reloadData];
 }
