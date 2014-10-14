@@ -30,6 +30,7 @@
     _arrProfileInfo = [[NSMutableArray alloc] init];
     _arrProfileInfoLabel = [[NSMutableArray alloc] init];
     _calendarsArray = [[NSMutableArray alloc] init];
+    _arrCalendarIds = [[NSMutableArray alloc] init];
     
     
     _googleOAuth = [[GADGoogleOAuth alloc] initWithFrame:self.view.frame];
@@ -70,6 +71,7 @@
     if([segue.identifier isEqualToString:@"dayselect"])
     {
         DaySelectViewController *controller = (DaySelectViewController *)segue.destinationViewController;
+        controller.arrCalendarIds = _arrCalendarIds;
         controller.calendarID = _calendarID;
     }
 }
@@ -154,6 +156,10 @@
     _arrProfileInfo = [[NSMutableArray alloc] init];
     for (int i=0; i<[_calendarsArray count]; i++) {
         [_arrProfileInfo addObject:[[_calendarsArray objectAtIndex:i] valueForKey:@"summary" ]];
+    }
+    
+    for (int i = 0; i < [_calendarsArray count]; i++) {
+        [_arrCalendarIds addObject:[[_calendarsArray objectAtIndex:i] valueForKey:@"id"]];
     }
 
     [_tableView reloadData];

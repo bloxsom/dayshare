@@ -9,6 +9,8 @@
 
 @property (nonatomic, strong) NSMutableArray *arrDays;
 @property (nonatomic, strong) NSMutableArray *arrDayLabels;
+@property (nonatomic, strong) NSMutableArray *arrCalendarIds;
+
 @property (nonatomic, strong) GADGoogleOAuth *googleOAuth;
 
 @property(nonatomic) NSString *calendarID;

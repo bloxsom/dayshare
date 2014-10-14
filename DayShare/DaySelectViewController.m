@@ -141,6 +141,7 @@
 }
 
 -(void)authorizationWasSuccessful{
+    NSString *ids = @"";
     NSString *cal_ids = [NSString stringWithFormat: @"[{\"id\":\"%@\"}]", _calendarID];
     NSArray *values = [NSArray arrayWithObjects:cal_ids, _timeStart, _timeEnd, nil];
     NSArray *params = [NSArray arrayWithObjects:@"items", @"timeMin", @"timeMax", nil];
@@ -176,6 +177,8 @@
     NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData
                                                                 options:NSJSONReadingMutableContainers
                                                                   error:nil];
+    NSMutableDictionary *calendars = [dict valueForKey:@"calendars"];
+    
     
     NSLog(@"%@", responseJSONAsString);
 //    _calendarsArray = [dict valueForKey:@"items"];
