@@ -1,17 +1,7 @@
-//
-//  GADViewController.h
-//  GoogleAuthDemo
-//
-//  Created by Honghao on 7/20/14.
-//  Copyright (c) 2014 org-honghao. All rights reserved.
-//
-
-// This demo app is made by following the tutorial http://code.tutsplus.com/tutorials/accessing-google-services-using-the-oauth-20-protocol--mobile-18394
-
 #import <UIKit/UIKit.h>
 #import "GADGoogleOAuth.h"
 
-@interface GADViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, GoogleOAuthDelegate>
+@interface DaySelectViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, GoogleOAuthDelegate>
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *profileButton;
@@ -21,8 +11,9 @@
 @property (nonatomic, strong) NSMutableArray *arrProfileInfo;
 @property (nonatomic, strong) NSMutableArray *arrProfileInfoLabel;
 @property (nonatomic, strong) GADGoogleOAuth *googleOAuth;
-@property(nonatomic) NSString *calendarID;
 
-- (IBAction)showProfile:(id)sender;
-- (IBAction)revokeAccess:(id)sender;
+@property(nonatomic) NSString *calendarID;
+@property(nonatomic) NSString *timeStart;
+@property(nonatomic) NSString *timeEnd;
+
 @end

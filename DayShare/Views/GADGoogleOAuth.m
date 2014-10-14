@@ -560,21 +560,30 @@
         if (httpMethod == httpMethod_POST) {
             // A string with the POST parameters should be built.
             // Create an empty string.
-            NSString *postParams = @"";
+            NSString *postParams = @"{";
             // Iterrate through all parameters and append every POST parameter to the postParams string.
             for (int i=0; i<[params count]; i++) {
-                postParams = [postParams stringByAppendingString:[NSString stringWithFormat:@"%@=%@",
-                                                                  [params objectAtIndex:i], [values objectAtIndex:i]]];
+                NSString *val = @"";
+                if ([[[values  objectAtIndex:i] substringWithRange:NSMakeRange(0,1)] isEqual: @"["]) {
+                    val = [values objectAtIndex:i];
+                } else {
+                    val = [NSString stringWithFormat:@"\"%@\"", [values objectAtIndex:i]];
+                }
+                postParams = [postParams stringByAppendingString:[NSString stringWithFormat:@"\"%@\":%@",
+                                                                  [params objectAtIndex:i], val]];
                 
                 // If the current parameter is not the last one then add the "&" symbol to separate post parameters.
                 if (i < [params count] - 1) {
-                    postParams = [postParams stringByAppendingString:@"&"];
+                    postParams = [postParams stringByAppendingString:@","];
+                } else {
+                    postParams = [postParams stringByAppendingString:@"}"];
                 }
             }
             
+            NSLog(@"Params: %@", postParams);
             // Set any other necessary options.
             [request setHTTPBody:[postParams dataUsingEncoding:NSUTF8StringEncoding]];
-            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         }
         
         

@@ -17,10 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="e5H-aP-zS8">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="40B-5g-LHe">
                                 <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                 <constraints>
@@ -41,6 +37,10 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="e5H-aP-zS8">
+                                <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -54,11 +54,40 @@
                         <outlet property="revokeAccessButton" destination="2JE-Xp-OlG" id="pXp-Yv-Vcl"/>
                         <outlet property="tableView" destination="e5H-aP-zS8" id="IsC-I4-EeZ"/>
                         <outlet property="toolBar" destination="40B-5g-LHe" id="pEG-KN-PbG"/>
+                        <segue destination="6vu-4K-IbZ" kind="push" identifier="dayselect" id="Wr5-dC-MMu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="520" y="2"/>
+        </scene>
+        <!--Day Select View Controller-->
+        <scene sceneID="9UA-RD-gGk">
+            <objects>
+                <viewController storyboardIdentifier="dayselect" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6vu-4K-IbZ" customClass="DaySelectViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="whK-Kc-YQ7"/>
+                        <viewControllerLayoutGuide type="bottom" id="fRc-rH-Qjq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="P9V-Jc-2Mq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="763-2D-mNN">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="GXe-t2-OZz"/>
+                    <connections>
+                        <outlet property="tableView" destination="763-2D-mNN" id="n4t-m8-WRc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B0r-Bp-xPl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="926" y="2"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lev-5C-H6k">
@@ -71,7 +100,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="MZ7-0s-hF5"/>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="Hmy-6U-C8o"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hJE-Gf-vI1" userLabel="First Responder" sceneMemberID="firstResponder"/>

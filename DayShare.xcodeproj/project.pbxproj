@@ -23,6 +23,7 @@
 		1B781652197C39800043664B /* GoogleAuthDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781651197C39800043664B /* GoogleAuthDemoTests.m */; };
 		1B781660197C3C150043664B /* GADGoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B78165F197C3C150043664B /* GADGoogleOAuth.m */; };
 		1B781665197C4AD60043664B /* ZHHHandyMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781664197C4AD60043664B /* ZHHHandyMacros.m */; };
+		CACD871719ECB8E00006DF4C /* DaySelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CACD871619ECB8E00006DF4C /* DaySelectViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		1B78165F197C3C150043664B /* GADGoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GADGoogleOAuth.m; path = Views/GADGoogleOAuth.m; sourceTree = "<group>"; };
 		1B781663197C4AD60043664B /* ZHHHandyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHHHandyMacros.h; sourceTree = "<group>"; };
 		1B781664197C4AD60043664B /* ZHHHandyMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHHHandyMacros.m; sourceTree = "<group>"; };
+		CACD871619ECB8E00006DF4C /* DaySelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DaySelectViewController.m; path = ../DaySelectViewController.m; sourceTree = "<group>"; };
+		CACD871819ECB8F20006DF4C /* DaySelectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DaySelectViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +127,8 @@
 				1B781638197C39800043664B /* Main.storyboard */,
 				1B78163B197C39800043664B /* GADViewController.h */,
 				1B78163C197C39800043664B /* GADViewController.m */,
+				CACD871819ECB8F20006DF4C /* DaySelectViewController.h */,
+				CACD871619ECB8E00006DF4C /* DaySelectViewController.m */,
 				1B781661197C3C190043664B /* Views */,
 				1B78163E197C39800043664B /* Images.xcassets */,
 				1B78162D197C39800043664B /* Supporting Files */,
@@ -280,6 +285,7 @@
 				1B781633197C39800043664B /* main.m in Sources */,
 				1B781660197C3C150043664B /* GADGoogleOAuth.m in Sources */,
 				1B781665197C4AD60043664B /* ZHHHandyMacros.m in Sources */,
+				CACD871719ECB8E00006DF4C /* DaySelectViewController.m in Sources */,
 				1B78163D197C39800043664B /* GADViewController.m in Sources */,
 				1B781637197C39800043664B /* GADAppDelegate.m in Sources */,
 			);
