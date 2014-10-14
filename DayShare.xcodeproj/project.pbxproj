@@ -16,25 +16,10 @@
 		1B78163A197C39800043664B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B781638197C39800043664B /* Main.storyboard */; };
 		1B78163D197C39800043664B /* GADViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B78163C197C39800043664B /* GADViewController.m */; };
 		1B78163F197C39800043664B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B78163E197C39800043664B /* Images.xcassets */; };
-		1B781646197C39800043664B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B781645197C39800043664B /* XCTest.framework */; };
-		1B781647197C39800043664B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B781626197C39800043664B /* Foundation.framework */; };
-		1B781648197C39800043664B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B78162A197C39800043664B /* UIKit.framework */; };
-		1B781650197C39800043664B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B78164E197C39800043664B /* InfoPlist.strings */; };
-		1B781652197C39800043664B /* GoogleAuthDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781651197C39800043664B /* GoogleAuthDemoTests.m */; };
 		1B781660197C3C150043664B /* GADGoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B78165F197C3C150043664B /* GADGoogleOAuth.m */; };
 		1B781665197C4AD60043664B /* ZHHHandyMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781664197C4AD60043664B /* ZHHHandyMacros.m */; };
 		CACD871719ECB8E00006DF4C /* DaySelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CACD871619ECB8E00006DF4C /* DaySelectViewController.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		1B781649197C39800043664B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1B78161B197C39800043664B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1B781622197C39800043664B;
-			remoteInfo = GoogleAuthDemo;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1B781623197C39800043664B /* DayShare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DayShare.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,11 +36,10 @@
 		1B78163B197C39800043664B /* GADViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADViewController.h; sourceTree = "<group>"; };
 		1B78163C197C39800043664B /* GADViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GADViewController.m; sourceTree = "<group>"; };
 		1B78163E197C39800043664B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		1B781644197C39800043664B /* DayShareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DayShareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B781645197C39800043664B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		1B78164D197C39800043664B /* GoogleAuthDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleAuthDemoTests-Info.plist"; sourceTree = "<group>"; };
 		1B78164F197C39800043664B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1B781651197C39800043664B /* GoogleAuthDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoogleAuthDemoTests.m; sourceTree = "<group>"; };
+		1B781651197C39800043664B /* GoogleAuthDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GoogleAuthDemoTests.m; path = ../DayShareTests/GoogleAuthDemoTests.m; sourceTree = "<group>"; };
 		1B78165E197C3C150043664B /* GADGoogleOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADGoogleOAuth.h; path = Views/GADGoogleOAuth.h; sourceTree = "<group>"; };
 		1B78165F197C3C150043664B /* GADGoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GADGoogleOAuth.m; path = Views/GADGoogleOAuth.m; sourceTree = "<group>"; };
 		1B781663197C4AD60043664B /* ZHHHandyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHHHandyMacros.h; sourceTree = "<group>"; };
@@ -72,16 +56,6 @@
 				1B781629197C39800043664B /* CoreGraphics.framework in Frameworks */,
 				1B78162B197C39800043664B /* UIKit.framework in Frameworks */,
 				1B781627197C39800043664B /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1B781641197C39800043664B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1B781646197C39800043664B /* XCTest.framework in Frameworks */,
-				1B781648197C39800043664B /* UIKit.framework in Frameworks */,
-				1B781647197C39800043664B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,7 +77,6 @@
 			isa = PBXGroup;
 			children = (
 				1B781623197C39800043664B /* DayShare.app */,
-				1B781644197C39800043664B /* DayShareTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -204,24 +177,6 @@
 			productReference = 1B781623197C39800043664B /* DayShare.app */;
 			productType = "com.apple.product-type.application";
 		};
-		1B781643197C39800043664B /* DayShareTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1B781658197C39800043664B /* Build configuration list for PBXNativeTarget "DayShareTests" */;
-			buildPhases = (
-				1B781640197C39800043664B /* Sources */,
-				1B781641197C39800043664B /* Frameworks */,
-				1B781642197C39800043664B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				1B78164A197C39800043664B /* PBXTargetDependency */,
-			);
-			name = DayShareTests;
-			productName = GoogleAuthDemoTests;
-			productReference = 1B781644197C39800043664B /* DayShareTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -231,11 +186,6 @@
 				CLASSPREFIX = GAD;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "org-honghao";
-				TargetAttributes = {
-					1B781643197C39800043664B = {
-						TestTargetID = 1B781622197C39800043664B;
-					};
-				};
 			};
 			buildConfigurationList = 1B78161E197C39800043664B /* Build configuration list for PBXProject "DayShare" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -251,7 +201,6 @@
 			projectRoot = "";
 			targets = (
 				1B781622197C39800043664B /* DayShare */,
-				1B781643197C39800043664B /* DayShareTests */,
 			);
 		};
 /* End PBXProject section */
@@ -264,14 +213,6 @@
 				1B78163F197C39800043664B /* Images.xcassets in Resources */,
 				1B781631197C39800043664B /* InfoPlist.strings in Resources */,
 				1B78163A197C39800043664B /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1B781642197C39800043664B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1B781650197C39800043664B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,23 +232,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1B781640197C39800043664B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1B781652197C39800043664B /* GoogleAuthDemoTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		1B78164A197C39800043664B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1B781622197C39800043664B /* DayShare */;
-			targetProxy = 1B781649197C39800043664B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		1B78162F197C39800043664B /* InfoPlist.strings */ = {
@@ -433,46 +358,6 @@
 			};
 			name = Release;
 		};
-		1B781659197C39800043664B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GoogleAuthDemo.app/GoogleAuthDemo";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GoogleAuthDemo/GoogleAuthDemo-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "DayShareTests/GoogleAuthDemoTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		1B78165A197C39800043664B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GoogleAuthDemo.app/GoogleAuthDemo";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GoogleAuthDemo/GoogleAuthDemo-Prefix.pch";
-				INFOPLIST_FILE = "DayShareTests/GoogleAuthDemoTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -490,15 +375,6 @@
 			buildConfigurations = (
 				1B781656197C39800043664B /* Debug */,
 				1B781657197C39800043664B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		1B781658197C39800043664B /* Build configuration list for PBXNativeTarget "DayShareTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1B781659197C39800043664B /* Debug */,
-				1B78165A197C39800043664B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
