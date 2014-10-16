@@ -84,7 +84,6 @@
     return 1;
 }
 
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [_arrDayLabels count];
 }
@@ -105,7 +104,6 @@
     [self authorize];
 }
 
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: CellIdentifier];
@@ -125,26 +123,26 @@
     }
     
     [[cell textLabel] setText:[_arrDayLabels objectAtIndex:[indexPath row]]];
-    //    [[cell detailTextLabel] setText:[_arrProfileInfoLabel objectAtIndex:[indexPath row]]];
     
     return cell;
 }
 
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 60.0;
 }
-
 
 - (IBAction)revokeAccess:(id)sender {
     [_googleOAuth revokeAccessToken];
 }
 
 -(void)authorizationWasSuccessful{
-    NSString *ids = @"";
+    
+    //How to get this to integrate with phone timezone?
+    NSString *timeZone = @"America/Detroit";
+   
     NSString *cal_ids = [NSString stringWithFormat: @"[{\"id\":\"%@\"}]", _calendarID];
-    NSArray *values = [NSArray arrayWithObjects:cal_ids, _timeStart, _timeEnd, nil];
-    NSArray *params = [NSArray arrayWithObjects:@"items", @"timeMin", @"timeMax", nil];
+    NSArray *values = [NSArray arrayWithObjects:cal_ids, _timeStart, _timeEnd, timeZone, nil];
+    NSArray *params = [NSArray arrayWithObjects:@"items", @"timeMin", @"timeMax", @"timeZone", nil];
     [_googleOAuth callAPI:@"https://www.googleapis.com/calendar/v3/freeBusy"
            withHttpMethod:httpMethod_POST
        postParameterNames:params postParameterValues: values];
@@ -155,9 +153,6 @@
                                                     message:@"Your access was revoked!"
                                                    delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
-    
-//    [_arrProfileInfo removeAllObjects];
-//    [_arrProfileInfoLabel removeAllObjects];
     
     [_tableView reloadData];
 }
@@ -173,18 +168,82 @@
 }
 
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
-    NSLog(@"");
+    
+    //Dictionary containing calendar obj, kind (calendar#freeBusy), timeMax, timeMin
     NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData
                                                                 options:NSJSONReadingMutableContainers
                                                                   error:nil];
+
+    
+    //Dictionary containing calendar object
     NSMutableDictionary *calendars = [dict valueForKey:@"calendars"];
     
     
-    NSLog(@"%@", responseJSONAsString);
-//    _calendarsArray = [dict valueForKey:@"items"];
-//    _arrProfileInfo = [[NSMutableArray alloc] init];
+    //There is probably a better way to do this?
+    NSMutableArray *busy = [calendars valueForKey:_calendarID];
+    NSMutableArray *times = [busy valueForKey:@"busy"];
+    NSMutableArray *start_times = [times valueForKey:@"start"];
+    NSMutableArray *end_times = [times valueForKey:@"end"];
+    
+    NSDateFormatter *dateFormatter0 = [[NSDateFormatter alloc] init];
+    [dateFormatter0 setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+    
+    //Arrays of NSDates
+    NSMutableArray *startDates = [[NSMutableArray alloc] init];
+    NSMutableArray *endDates = [[NSMutableArray alloc] init];
+    
+    for (int i=0; i<[start_times count]; i++) {
+        
+        NSDate *timeStart = [dateFormatter0 dateFromString:[start_times objectAtIndex:i]];
+        NSDate *timeEnd = [dateFormatter0 dateFromString:[end_times objectAtIndex:i]];
+        
+        [startDates addObject: timeStart];
+        [endDates addObject: timeEnd];
+    }
+    
+    [self calculateFreeTime:startDates end:endDates];
     
     [_tableView reloadData];
+}
+
+- (void)calculateFreeTime:(NSMutableArray *)startDates end:(NSMutableArray *)endDates {
+    
+    NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
+    [dateFormatter1 setDateFormat:@"HH:mm"];
+    
+    //Default free times are from 8am to 10pm, change this later.
+    NSString *minTime = @"08:00";
+    NSString *maxTime = @"22:00";
+    
+    NSString *freeTimes = @"I am free from ";
+    freeTimes = [freeTimes stringByAppendingString:minTime];
+
+    
+    for (int i=0; i<[startDates count]; i++) {
+        
+        NSString *formattedStart = [dateFormatter1 stringFromDate:[startDates objectAtIndex:i]];
+        NSString *formattedEnd = [dateFormatter1 stringFromDate:[endDates objectAtIndex:i]];
+        
+        freeTimes = [freeTimes stringByAppendingString:[NSString stringWithFormat:@" to %@ and from %@",
+                                                        formattedStart, formattedEnd]];
+    }
+    
+    freeTimes = [freeTimes stringByAppendingString:@" to "];
+    freeTimes = [freeTimes stringByAppendingString:maxTime];
+    
+    //To do: account for case where the end time goes later than the maxTime
+    //Figure out NSDateFormatter
+    //Option where users can choose when their default minTime & maxTimes are
+    //Integrate more than one calendar
+    
+    [self copyToClipboard:freeTimes];
+}
+
+- (void)copyToClipboard:(NSString *)str {
+    NSLog(@"%@", str);
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = str;
+
 }
 
 @end

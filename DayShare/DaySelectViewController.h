@@ -16,5 +16,10 @@
 @property(nonatomic) NSString *calendarID;
 @property(nonatomic) NSString *timeStart;
 @property(nonatomic) NSString *timeEnd;
+@property(nonatomic) NSString *timeZone;
+
+- (void)calculateFreeTime:(NSMutableArray *)startDates end:(NSMutableArray *)endDates;
+
+- (void)copyToClipboard:(NSString *)str;
 
 @end

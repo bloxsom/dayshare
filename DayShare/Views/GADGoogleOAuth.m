@@ -257,7 +257,6 @@
         // Notify the caller class through the delegate.
         [self.gOAuthDelegate errorInResponseWithBody:responseJSON];
         
-        
         isAPIResponse = NO;
     }
     
@@ -564,11 +563,12 @@
             // Iterrate through all parameters and append every POST parameter to the postParams string.
             for (int i=0; i<[params count]; i++) {
                 NSString *val = @"";
-                if ([[[values  objectAtIndex:i] substringWithRange:NSMakeRange(0,1)] isEqual: @"["]) {
+                if ([[[values objectAtIndex:i] substringWithRange:NSMakeRange(0,1)] isEqual: @"["]) {
                     val = [values objectAtIndex:i];
                 } else {
                     val = [NSString stringWithFormat:@"\"%@\"", [values objectAtIndex:i]];
                 }
+
                 postParams = [postParams stringByAppendingString:[NSString stringWithFormat:@"\"%@\":%@",
                                                                   [params objectAtIndex:i], val]];
                 
@@ -579,13 +579,12 @@
                     postParams = [postParams stringByAppendingString:@"}"];
                 }
             }
-            
+
             NSLog(@"Params: %@", postParams);
             // Set any other necessary options.
             [request setHTTPBody:[postParams dataUsingEncoding:NSUTF8StringEncoding]];
             [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         }
-        
         
         // Make the request.
         [self makeRequest:request];
