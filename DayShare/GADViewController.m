@@ -72,7 +72,7 @@
     {
         DaySelectViewController *controller = (DaySelectViewController *)segue.destinationViewController;
         controller.arrCalendarIds = _arrCalendarIds;
-        controller.calendarID = _calendarID;
+//        controller.calendarID = _calendarID;
     }
 }
 
@@ -161,9 +161,11 @@
     for (int i = 0; i < [_calendarsArray count]; i++) {
         [_arrCalendarIds addObject:[[_calendarsArray objectAtIndex:i] valueForKey:@"id"]];
     }
+    
+    [self performSegueWithIdentifier:@"dayselect" sender:nil];
 
-    [_tableView reloadData];
-    self.navigationItem.title = @"Select a calendar";
+//    [_tableView reloadData];
+//    self.navigationItem.title = @"Select a calendar";
 }
 
 @end

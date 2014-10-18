@@ -139,9 +139,20 @@
     
     //How to get this to integrate with phone timezone?
     NSString *timeZone = @"America/Detroit";
+    
+    NSMutableString *calIds = [[NSMutableString alloc] init];
+    [calIds appendString:@"["];
+    for (int i = 0; i < [_arrCalendarIds count]; i++) {
+        NSString *curr = [NSString stringWithFormat: @"{\"id\":\"%@\"}", [_arrCalendarIds objectAtIndex:i]];
+        if (i > 0) {
+            [calIds appendString:@","];
+        }
+        [calIds appendString:curr];
+    }
+    [calIds appendString:@"]"];
+    
    
-    NSString *cal_ids = [NSString stringWithFormat: @"[{\"id\":\"%@\"}]", _calendarID];
-    NSArray *values = [NSArray arrayWithObjects:cal_ids, _timeStart, _timeEnd, timeZone, nil];
+    NSArray *values = [NSArray arrayWithObjects:calIds, _timeStart, _timeEnd, timeZone, nil];
     NSArray *params = [NSArray arrayWithObjects:@"items", @"timeMin", @"timeMax", @"timeZone", nil];
     [_googleOAuth callAPI:@"https://www.googleapis.com/calendar/v3/freeBusy"
            withHttpMethod:httpMethod_POST
@@ -178,12 +189,15 @@
     //Dictionary containing calendar object
     NSMutableDictionary *calendars = [dict valueForKey:@"calendars"];
     
-    
-    //There is probably a better way to do this?
-    NSMutableArray *busy = [calendars valueForKey:_calendarID];
-    NSMutableArray *times = [busy valueForKey:@"busy"];
-    NSMutableArray *start_times = [times valueForKey:@"start"];
-    NSMutableArray *end_times = [times valueForKey:@"end"];
+    NSMutableArray *busyTimes = [[NSMutableArray alloc] init];
+    for (id calendarKey in calendars) {
+        NSMutableDictionary *calendar = [calendars objectForKey:calendarKey];
+        NSMutableArray *pairs = [calendar objectForKey:@"busy"];
+        for (NSMutableDictionary *pair in pairs) {
+            [busyTimes addObject: pair];
+        }
+        
+    }
     
     NSDateFormatter *dateFormatter0 = [[NSDateFormatter alloc] init];
     [dateFormatter0 setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
@@ -192,18 +206,17 @@
     NSMutableArray *startDates = [[NSMutableArray alloc] init];
     NSMutableArray *endDates = [[NSMutableArray alloc] init];
     
-    for (int i=0; i<[start_times count]; i++) {
-        
-        NSDate *timeStart = [dateFormatter0 dateFromString:[start_times objectAtIndex:i]];
-        NSDate *timeEnd = [dateFormatter0 dateFromString:[end_times objectAtIndex:i]];
+    for (int i=0; i<[busyTimes count]; i++) {
+        NSString *startString = [[busyTimes objectAtIndex:i] valueForKey:@"start"];
+        NSString *endString = [[busyTimes objectAtIndex:i] valueForKey:@"end"];
+        NSDate *timeStart = [dateFormatter0 dateFromString:startString];
+        NSDate *timeEnd = [dateFormatter0 dateFromString:endString];
         
         [startDates addObject: timeStart];
         [endDates addObject: timeEnd];
     }
     
     [self calculateFreeTime:startDates end:endDates];
-    
-    [_tableView reloadData];
 }
 
 - (void)calculateFreeTime:(NSMutableArray *)startDates end:(NSMutableArray *)endDates {
