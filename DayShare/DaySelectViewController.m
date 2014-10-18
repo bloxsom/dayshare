@@ -26,7 +26,8 @@
 //    UIEdgeInsets contentInset = _tableView.contentInset;
 //    contentInset.bottom = _toolBar.bounds.size.height;
 //    [_tableView setContentInset:contentInset];
-    _arrDayLabels = [[NSMutableArray alloc] init];
+    _arrDayNameLabels = [[NSMutableArray alloc] init];
+    _arrDayFullNameLabels = [[NSMutableArray alloc] init];
     _arrDays = [[NSMutableArray alloc] init];
     _arrCalendarIds = [[NSMutableArray alloc] init];
     
@@ -58,9 +59,13 @@
     NSString *tomorrow = [dateFormatter stringFromDate:tomorrowMidnight];
     
     NSDateFormatter *dayNameFormatter = [[NSDateFormatter alloc] init];
-    [dayNameFormatter setDateFormat:@"EEEE - MM/dd/y"];
+    [dayNameFormatter setDateFormat:@"EEEE"];
+    NSDateFormatter *fullDayNameFormatter = [[NSDateFormatter alloc] init];
+    [fullDayNameFormatter setDateFormat:@"MMMM d"];
     
-    [_arrDayLabels addObject: @"Today"];
+    [_arrDayNameLabels addObject: @"Today"];
+    [_arrDayFullNameLabels addObject: [fullDayNameFormatter stringFromDate:date]];
+    
     [_arrDays addObject: [NSArray arrayWithObjects:today, tomorrow, nil]];
     
     for (int i = 0; i < 7; i++) {
@@ -71,7 +76,8 @@
         NSString *currentString = [dateFormatter stringFromDate:current];
         NSString *nextString = [dateFormatter stringFromDate:next];
         [_arrDays addObject: [NSArray arrayWithObjects:currentString, nextString, nil]];
-        [_arrDayLabels addObject:dayName];
+        [_arrDayNameLabels addObject:dayName];
+        [_arrDayFullNameLabels addObject: [fullDayNameFormatter stringFromDate:current]];
     }
     
 }
@@ -87,7 +93,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [_arrDayLabels count];
+    return [_arrDayNameLabels count];
 }
 
 - (void) authorize {
@@ -116,21 +122,22 @@
         [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
         [cell setAccessoryType:UITableViewCellAccessoryNone];
         
-        [[cell textLabel] setFont:[UIFont fontWithName:@"Helvetica Neue" size:15.0]];
+        [[cell textLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:24.0]];
         [[cell textLabel] setShadowOffset:CGSizeMake(1.0, 1.0)];
         [[cell textLabel] setShadowColor:[UIColor whiteColor]];
         
-        [[cell detailTextLabel] setFont:[UIFont fontWithName:@"Helvetica Neue" size:13.0]];
+        [[cell detailTextLabel] setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0]];
         [[cell detailTextLabel] setTextColor:[UIColor grayColor]];
     }
     
-    [[cell textLabel] setText:[_arrDayLabels objectAtIndex:[indexPath row]]];
+    [[cell textLabel] setText:[_arrDayNameLabels objectAtIndex:[indexPath row]]];
+    [[cell detailTextLabel] setText:[_arrDayFullNameLabels objectAtIndex:[indexPath row]]];
     
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 60.0;
+    return 74.0;
 }
 
 - (IBAction)revokeAccess:(id)sender {

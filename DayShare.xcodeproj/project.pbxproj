@@ -34,9 +34,6 @@
 		1B781639197C39800043664B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1B78163E197C39800043664B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1B781645197C39800043664B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		1B78164D197C39800043664B /* GoogleAuthDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleAuthDemoTests-Info.plist"; sourceTree = "<group>"; };
-		1B78164F197C39800043664B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1B781651197C39800043664B /* GoogleAuthDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GoogleAuthDemoTests.m; path = ../DayShareTests/GoogleAuthDemoTests.m; sourceTree = "<group>"; };
 		1B78165E197C3C150043664B /* GADGoogleOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADGoogleOAuth.h; path = Views/GADGoogleOAuth.h; sourceTree = "<group>"; };
 		1B78165F197C3C150043664B /* GADGoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GADGoogleOAuth.m; path = Views/GADGoogleOAuth.m; sourceTree = "<group>"; };
 		1B781663197C4AD60043664B /* ZHHHandyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHHHandyMacros.h; sourceTree = "<group>"; };
@@ -64,7 +61,6 @@
 			children = (
 				1B781662197C4AD60043664B /* ZHHHandyMacros */,
 				1B78162C197C39800043664B /* DayShare */,
-				1B78164B197C39800043664B /* DayShareTests */,
 				1B781625197C39800043664B /* Frameworks */,
 				1B781624197C39800043664B /* Products */,
 			);
@@ -111,25 +107,6 @@
 				1B78162F197C39800043664B /* InfoPlist.strings */,
 				1B781632197C39800043664B /* main.m */,
 				1B781634197C39800043664B /* GoogleAuthDemo-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		1B78164B197C39800043664B /* DayShareTests */ = {
-			isa = PBXGroup;
-			children = (
-				1B781651197C39800043664B /* GoogleAuthDemoTests.m */,
-				1B78164C197C39800043664B /* Supporting Files */,
-			);
-			name = DayShareTests;
-			path = GoogleAuthDemoTests;
-			sourceTree = "<group>";
-		};
-		1B78164C197C39800043664B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				1B78164D197C39800043664B /* GoogleAuthDemoTests-Info.plist */,
-				1B78164E197C39800043664B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -243,14 +220,6 @@
 				1B781639197C39800043664B /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		1B78164E197C39800043664B /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1B78164F197C39800043664B /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

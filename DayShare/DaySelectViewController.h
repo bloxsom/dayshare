@@ -8,10 +8,10 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revokeAccessButton;
 
 @property (nonatomic, strong) NSMutableArray *arrDays;
-@property (nonatomic, strong) NSMutableArray *arrDayLabels;
-@property (nonatomic, strong) NSMutableArray *arrCalendarIds;
+@property (nonatomic, strong) NSMutableArray *arrDayNameLabels;
+@property (nonatomic, strong) NSMutableArray *arrDayFullNameLabels;
 
-@property (nonatomic, strong) NSMutableArray *test;
+@property (nonatomic, strong) NSMutableArray *arrCalendarIds;
 
 @property (nonatomic, strong) GADGoogleOAuth *googleOAuth;
 
