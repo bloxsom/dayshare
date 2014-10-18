@@ -14,7 +14,6 @@
 		1B781633197C39800043664B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781632197C39800043664B /* main.m */; };
 		1B781637197C39800043664B /* GADAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781636197C39800043664B /* GADAppDelegate.m */; };
 		1B78163A197C39800043664B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B781638197C39800043664B /* Main.storyboard */; };
-		1B78163D197C39800043664B /* GADViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B78163C197C39800043664B /* GADViewController.m */; };
 		1B78163F197C39800043664B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B78163E197C39800043664B /* Images.xcassets */; };
 		1B781660197C3C150043664B /* GADGoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B78165F197C3C150043664B /* GADGoogleOAuth.m */; };
 		1B781665197C4AD60043664B /* ZHHHandyMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781664197C4AD60043664B /* ZHHHandyMacros.m */; };
@@ -33,8 +32,6 @@
 		1B781635197C39800043664B /* GADAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADAppDelegate.h; sourceTree = "<group>"; };
 		1B781636197C39800043664B /* GADAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GADAppDelegate.m; sourceTree = "<group>"; };
 		1B781639197C39800043664B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1B78163B197C39800043664B /* GADViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADViewController.h; sourceTree = "<group>"; };
-		1B78163C197C39800043664B /* GADViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GADViewController.m; sourceTree = "<group>"; };
 		1B78163E197C39800043664B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1B781645197C39800043664B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		1B78164D197C39800043664B /* GoogleAuthDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleAuthDemoTests-Info.plist"; sourceTree = "<group>"; };
@@ -98,8 +95,6 @@
 				1B781635197C39800043664B /* GADAppDelegate.h */,
 				1B781636197C39800043664B /* GADAppDelegate.m */,
 				1B781638197C39800043664B /* Main.storyboard */,
-				1B78163B197C39800043664B /* GADViewController.h */,
-				1B78163C197C39800043664B /* GADViewController.m */,
 				CACD871819ECB8F20006DF4C /* DaySelectViewController.h */,
 				CACD871619ECB8E00006DF4C /* DaySelectViewController.m */,
 				1B781661197C3C190043664B /* Views */,
@@ -227,7 +222,6 @@
 				1B781660197C3C150043664B /* GADGoogleOAuth.m in Sources */,
 				1B781665197C4AD60043664B /* ZHHHandyMacros.m in Sources */,
 				CACD871719ECB8E00006DF4C /* DaySelectViewController.m in Sources */,
-				1B78163D197C39800043664B /* GADViewController.m in Sources */,
 				1B781637197C39800043664B /* GADAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -23,17 +23,19 @@
     
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
-    UIEdgeInsets contentInset = _tableView.contentInset;
-    contentInset.bottom = _toolBar.bounds.size.height;
-    [_tableView setContentInset:contentInset];
+//    UIEdgeInsets contentInset = _tableView.contentInset;
+//    contentInset.bottom = _toolBar.bounds.size.height;
+//    [_tableView setContentInset:contentInset];
     _arrDayLabels = [[NSMutableArray alloc] init];
     _arrDays = [[NSMutableArray alloc] init];
+    _arrCalendarIds = [[NSMutableArray alloc] init];
     
     
     _googleOAuth = [[GADGoogleOAuth alloc] initWithFrame:self.view.frame];
     [_googleOAuth setGOAuthDelegate:self];
 
     [self setupDates];
+    [self authorize];
 }
 
 - (void)setupDates {
@@ -135,8 +137,13 @@
     [_googleOAuth revokeAccessToken];
 }
 
--(void)authorizationWasSuccessful{
-    
+-(void)fetchCalendarIDs {
+    [_googleOAuth callAPI:@"https://www.googleapis.com/calendar/v3/users/me/calendarList"
+           withHttpMethod:httpMethod_GET
+       postParameterNames:nil postParameterValues:nil];
+}
+
+-(void)fetchFreeBusy {
     //How to get this to integrate with phone timezone?
     NSString *timeZone = @"America/Detroit";
     
@@ -151,12 +158,20 @@
     }
     [calIds appendString:@"]"];
     
-   
+    
     NSArray *values = [NSArray arrayWithObjects:calIds, _timeStart, _timeEnd, timeZone, nil];
     NSArray *params = [NSArray arrayWithObjects:@"items", @"timeMin", @"timeMax", @"timeZone", nil];
     [_googleOAuth callAPI:@"https://www.googleapis.com/calendar/v3/freeBusy"
            withHttpMethod:httpMethod_POST
        postParameterNames:params postParameterValues: values];
+}
+
+-(void)authorizationWasSuccessful{
+    if ([_arrCalendarIds count] == 0) {
+        [self fetchCalendarIDs];
+    } else {
+        [self fetchFreeBusy];
+    }
 }
 
 -(void)accessTokenWasRevoked{
@@ -178,17 +193,11 @@
     NSLog(@"%@", errorMessage);
 }
 
--(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
-    
-    //Dictionary containing calendar obj, kind (calendar#freeBusy), timeMax, timeMin
-    NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData
-                                                                options:NSJSONReadingMutableContainers
-                                                                  error:nil];
-
-    
+-(void)handleFreeBusyResponse:(NSMutableDictionary*)response {
     //Dictionary containing calendar object
-    NSMutableDictionary *calendars = [dict valueForKey:@"calendars"];
+    NSMutableDictionary *calendars = [response valueForKey:@"calendars"];
     
+    //Collect the busy start/end pairs
     NSMutableArray *busyTimes = [[NSMutableArray alloc] init];
     for (id calendarKey in calendars) {
         NSMutableDictionary *calendar = [calendars objectForKey:calendarKey];
@@ -217,6 +226,31 @@
     }
     
     [self calculateFreeTime:startDates end:endDates];
+}
+
+-(void)handleCalendarResponse:(NSMutableDictionary*)response {
+    NSMutableArray *calendarsArray = [response valueForKey:@"items"];
+    
+    for (int i = 0; i < [calendarsArray count]; i++) {
+        [_arrCalendarIds addObject:[[calendarsArray objectAtIndex:i] valueForKey:@"id"]];
+    }
+}
+
+-(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
+    
+    //Dictionary containing calendar obj, kind (calendar#freeBusy), timeMax, timeMin
+    NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData
+                                                                options:NSJSONReadingMutableContainers
+                                                                  error:nil];
+    if ([[dict valueForKey:@"kind"] isEqual:@"calendar#calendarList"]) {
+        [self handleCalendarResponse:dict];
+        if (_timeStart && _timeEnd) {
+            [self fetchFreeBusy];
+        }
+    } else if ([[dict valueForKey:@"kind"] isEqual:@"calendar#freeBusy"]) {
+        [self handleFreeBusyResponse:dict];
+    }
+
 }
 
 - (void)calculateFreeTime:(NSMutableArray *)startDates end:(NSMutableArray *)endDates {
