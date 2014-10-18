@@ -7,6 +7,7 @@
 //
 
 #import "DaySelectViewController.h"
+#import "CWStatusBarNotification.h"
 
 @interface DaySelectViewController ()
 
@@ -31,6 +32,8 @@
     _arrDays = [[NSMutableArray alloc] init];
     _arrCalendarIds = [[NSMutableArray alloc] init];
     
+    _notification = [CWStatusBarNotification new];
+    _notification.notificationLabelBackgroundColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
     
     _googleOAuth = [[GADGoogleOAuth alloc] initWithFrame:self.view.frame];
     [_googleOAuth setGOAuthDelegate:self];
@@ -294,6 +297,7 @@
 }
 
 - (void)copyToClipboard:(NSString *)str {
+    [_notification displayNotificationWithMessage:@"Copied availability to clipboard!" forDuration:1.5f];
     NSLog(@"%@", str);
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = str;

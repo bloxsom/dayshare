@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 #import "GADGoogleOAuth.h"
+#import "CWStatusBarNotification.h"
 
 @interface DaySelectViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, GoogleOAuthDelegate>
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
@@ -7,6 +8,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *profileButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revokeAccessButton;
 
+@property (nonatomic, strong) CWStatusBarNotification *notification;
 @property (nonatomic, strong) NSMutableArray *arrDays;
 @property (nonatomic, strong) NSMutableArray *arrDayNameLabels;
 @property (nonatomic, strong) NSMutableArray *arrDayFullNameLabels;

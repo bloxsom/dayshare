@@ -17,6 +17,7 @@
 		1B78163F197C39800043664B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B78163E197C39800043664B /* Images.xcassets */; };
 		1B781660197C3C150043664B /* GADGoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B78165F197C3C150043664B /* GADGoogleOAuth.m */; };
 		1B781665197C4AD60043664B /* ZHHHandyMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781664197C4AD60043664B /* ZHHHandyMacros.m */; };
+		CAB8A9AD19F32F65004019C5 /* CWStatusBarNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB8A9AC19F32F65004019C5 /* CWStatusBarNotification.m */; };
 		CACD871719ECB8E00006DF4C /* DaySelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CACD871619ECB8E00006DF4C /* DaySelectViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,8 @@
 		1B78165F197C3C150043664B /* GADGoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GADGoogleOAuth.m; path = Views/GADGoogleOAuth.m; sourceTree = "<group>"; };
 		1B781663197C4AD60043664B /* ZHHHandyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHHHandyMacros.h; sourceTree = "<group>"; };
 		1B781664197C4AD60043664B /* ZHHHandyMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHHHandyMacros.m; sourceTree = "<group>"; };
+		CAB8A9AB19F32F65004019C5 /* CWStatusBarNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWStatusBarNotification.h; sourceTree = "<group>"; };
+		CAB8A9AC19F32F65004019C5 /* CWStatusBarNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWStatusBarNotification.m; sourceTree = "<group>"; };
 		CACD871619ECB8E00006DF4C /* DaySelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DaySelectViewController.m; sourceTree = "<group>"; };
 		CACD871819ECB8F20006DF4C /* DaySelectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DaySelectViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -59,6 +62,7 @@
 		1B78161A197C39800043664B = {
 			isa = PBXGroup;
 			children = (
+				CAB8A9AA19F32F65004019C5 /* CWStatusBarNotification */,
 				1B781662197C4AD60043664B /* ZHHHandyMacros */,
 				1B78162C197C39800043664B /* DayShare */,
 				1B781625197C39800043664B /* Frameworks */,
@@ -129,6 +133,15 @@
 			path = ZHHHandyMacros;
 			sourceTree = "<group>";
 		};
+		CAB8A9AA19F32F65004019C5 /* CWStatusBarNotification */ = {
+			isa = PBXGroup;
+			children = (
+				CAB8A9AB19F32F65004019C5 /* CWStatusBarNotification.h */,
+				CAB8A9AC19F32F65004019C5 /* CWStatusBarNotification.m */,
+			);
+			path = CWStatusBarNotification;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -197,6 +210,7 @@
 			files = (
 				1B781633197C39800043664B /* main.m in Sources */,
 				1B781660197C3C150043664B /* GADGoogleOAuth.m in Sources */,
+				CAB8A9AD19F32F65004019C5 /* CWStatusBarNotification.m in Sources */,
 				1B781665197C4AD60043664B /* ZHHHandyMacros.m in Sources */,
 				CACD871719ECB8E00006DF4C /* DaySelectViewController.m in Sources */,
 				1B781637197C39800043664B /* GADAppDelegate.m in Sources */,
