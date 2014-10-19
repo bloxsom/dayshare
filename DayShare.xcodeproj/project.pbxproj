@@ -64,6 +64,7 @@
 			children = (
 				CAB8A9AA19F32F65004019C5 /* CWStatusBarNotification */,
 				1B781662197C4AD60043664B /* ZHHHandyMacros */,
+				1B781661197C3C190043664B /* GoogleOAuth */,
 				1B78162C197C39800043664B /* DayShare */,
 				1B781625197C39800043664B /* Frameworks */,
 				1B781624197C39800043664B /* Products */,
@@ -97,7 +98,6 @@
 				1B781638197C39800043664B /* Main.storyboard */,
 				CACD871819ECB8F20006DF4C /* DaySelectViewController.h */,
 				CACD871619ECB8E00006DF4C /* DaySelectViewController.m */,
-				1B781661197C3C190043664B /* Views */,
 				1B78163E197C39800043664B /* Images.xcassets */,
 				1B78162D197C39800043664B /* Supporting Files */,
 			);
@@ -115,13 +115,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		1B781661197C3C190043664B /* Views */ = {
+		1B781661197C3C190043664B /* GoogleOAuth */ = {
 			isa = PBXGroup;
 			children = (
 				1B78165E197C3C150043664B /* GADGoogleOAuth.h */,
 				1B78165F197C3C150043664B /* GADGoogleOAuth.m */,
 			);
-			name = Views;
+			name = GoogleOAuth;
+			path = DayShare;
 			sourceTree = "<group>";
 		};
 		1B781662197C4AD60043664B /* ZHHHandyMacros */ = {

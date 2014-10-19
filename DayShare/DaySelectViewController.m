@@ -154,8 +154,9 @@
 }
 
 -(void)fetchFreeBusy {
-    //How to get this to integrate with phone timezone?
-    NSString *timeZone = @"America/Detroit";
+    NSTimeZone *currentTimeZone = [NSTimeZone localTimeZone];
+    [currentTimeZone name];
+    NSString *timeZone = [[NSTimeZone localTimeZone] name];
     
     NSMutableString *calIds = [[NSMutableString alloc] init];
     [calIds appendString:@"["];
@@ -266,18 +267,17 @@
 - (void)calculateFreeTime:(NSMutableArray *)startDates end:(NSMutableArray *)endDates {
     
     NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
-    [dateFormatter1 setDateFormat:@"HH:mm"];
+    [dateFormatter1 setDateFormat:@"h:mma"];
     
     //Default free times are from 8am to 10pm, change this later.
-    NSString *minTime = @"08:00";
-    NSString *maxTime = @"22:00";
+    NSString *minTime = @"8:00AM";
+    NSString *maxTime = @"10:00PM";
     
     NSString *freeTimes = @"I am free from ";
     freeTimes = [freeTimes stringByAppendingString:minTime];
 
     
     for (int i=0; i<[startDates count]; i++) {
-        
         NSString *formattedStart = [dateFormatter1 stringFromDate:[startDates objectAtIndex:i]];
         NSString *formattedEnd = [dateFormatter1 stringFromDate:[endDates objectAtIndex:i]];
         
@@ -291,7 +291,6 @@
     //To do: account for case where the end time goes later than the maxTime
     //Figure out NSDateFormatter
     //Option where users can choose when their default minTime & maxTimes are
-    //Integrate more than one calendar
     
     [self copyToClipboard:freeTimes];
 }
