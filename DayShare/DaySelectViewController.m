@@ -15,6 +15,8 @@
 
 @implementation DaySelectViewController
 
+int const NUM_DAYS_FOR_SELECT = 14;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -71,7 +73,7 @@
     
     [_arrDays addObject: [NSArray arrayWithObjects:today, tomorrow, nil]];
     
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < NUM_DAYS_FOR_SELECT; i++) {
         NSDate *current = [[NSCalendar currentCalendar] dateFromComponents:comps];
         comps.day = comps.day + 1;
         NSDate *next = [[NSCalendar currentCalendar] dateFromComponents:comps];
@@ -265,7 +267,6 @@
 }
 
 - (void)calculateFreeTime:(NSMutableArray *)startDates end:(NSMutableArray *)endDates {
-    
     NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
     [dateFormatter1 setDateFormat:@"h:mma"];
     
