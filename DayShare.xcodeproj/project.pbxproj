@@ -13,10 +13,10 @@
 		1B781631197C39800043664B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B78162F197C39800043664B /* InfoPlist.strings */; };
 		1B781633197C39800043664B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781632197C39800043664B /* main.m */; };
 		1B781637197C39800043664B /* GADAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781636197C39800043664B /* GADAppDelegate.m */; };
-		1B78163A197C39800043664B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B781638197C39800043664B /* Main.storyboard */; };
 		1B78163F197C39800043664B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B78163E197C39800043664B /* Images.xcassets */; };
-		1B781660197C3C150043664B /* GADGoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B78165F197C3C150043664B /* GADGoogleOAuth.m */; };
-		1B781665197C4AD60043664B /* ZHHHandyMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781664197C4AD60043664B /* ZHHHandyMacros.m */; };
+		CA6DD82219F49E9D006F17CC /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA6DD82119F49E9D006F17CC /* EventKit.framework */; };
+		CA6DD82419F49EB6006F17CC /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA6DD82319F49EB6006F17CC /* EventKitUI.framework */; };
+		CA9364D319F583D4003CF366 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA9364D119F583D4003CF366 /* Main.storyboard */; };
 		CAB8A9AD19F32F65004019C5 /* CWStatusBarNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB8A9AC19F32F65004019C5 /* CWStatusBarNotification.m */; };
 		CACD871719ECB8E00006DF4C /* DaySelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CACD871619ECB8E00006DF4C /* DaySelectViewController.m */; };
 /* End PBXBuildFile section */
@@ -32,13 +32,11 @@
 		1B781634197C39800043664B /* GoogleAuthDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GoogleAuthDemo-Prefix.pch"; sourceTree = "<group>"; };
 		1B781635197C39800043664B /* GADAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADAppDelegate.h; sourceTree = "<group>"; };
 		1B781636197C39800043664B /* GADAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GADAppDelegate.m; sourceTree = "<group>"; };
-		1B781639197C39800043664B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1B78163E197C39800043664B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1B781645197C39800043664B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		1B78165E197C3C150043664B /* GADGoogleOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADGoogleOAuth.h; path = Views/GADGoogleOAuth.h; sourceTree = "<group>"; };
-		1B78165F197C3C150043664B /* GADGoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GADGoogleOAuth.m; path = Views/GADGoogleOAuth.m; sourceTree = "<group>"; };
-		1B781663197C4AD60043664B /* ZHHHandyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHHHandyMacros.h; sourceTree = "<group>"; };
-		1B781664197C4AD60043664B /* ZHHHandyMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHHHandyMacros.m; sourceTree = "<group>"; };
+		CA6DD82119F49E9D006F17CC /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		CA6DD82319F49EB6006F17CC /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		CA9364D219F583D4003CF366 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CAB8A9AB19F32F65004019C5 /* CWStatusBarNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWStatusBarNotification.h; sourceTree = "<group>"; };
 		CAB8A9AC19F32F65004019C5 /* CWStatusBarNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWStatusBarNotification.m; sourceTree = "<group>"; };
 		CACD871619ECB8E00006DF4C /* DaySelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DaySelectViewController.m; sourceTree = "<group>"; };
@@ -50,6 +48,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA6DD82419F49EB6006F17CC /* EventKitUI.framework in Frameworks */,
+				CA6DD82219F49E9D006F17CC /* EventKit.framework in Frameworks */,
 				1B781629197C39800043664B /* CoreGraphics.framework in Frameworks */,
 				1B78162B197C39800043664B /* UIKit.framework in Frameworks */,
 				1B781627197C39800043664B /* Foundation.framework in Frameworks */,
@@ -63,8 +63,6 @@
 			isa = PBXGroup;
 			children = (
 				CAB8A9AA19F32F65004019C5 /* CWStatusBarNotification */,
-				1B781662197C4AD60043664B /* ZHHHandyMacros */,
-				1B781661197C3C190043664B /* GoogleOAuth */,
 				1B78162C197C39800043664B /* DayShare */,
 				1B781625197C39800043664B /* Frameworks */,
 				1B781624197C39800043664B /* Products */,
@@ -82,6 +80,8 @@
 		1B781625197C39800043664B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CA6DD82319F49EB6006F17CC /* EventKitUI.framework */,
+				CA6DD82119F49E9D006F17CC /* EventKit.framework */,
 				1B781626197C39800043664B /* Foundation.framework */,
 				1B781628197C39800043664B /* CoreGraphics.framework */,
 				1B78162A197C39800043664B /* UIKit.framework */,
@@ -93,9 +93,9 @@
 		1B78162C197C39800043664B /* DayShare */ = {
 			isa = PBXGroup;
 			children = (
+				CA9364D119F583D4003CF366 /* Main.storyboard */,
 				1B781635197C39800043664B /* GADAppDelegate.h */,
 				1B781636197C39800043664B /* GADAppDelegate.m */,
-				1B781638197C39800043664B /* Main.storyboard */,
 				CACD871819ECB8F20006DF4C /* DaySelectViewController.h */,
 				CACD871619ECB8E00006DF4C /* DaySelectViewController.m */,
 				1B78163E197C39800043664B /* Images.xcassets */,
@@ -113,25 +113,6 @@
 				1B781634197C39800043664B /* GoogleAuthDemo-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		1B781661197C3C190043664B /* GoogleOAuth */ = {
-			isa = PBXGroup;
-			children = (
-				1B78165E197C3C150043664B /* GADGoogleOAuth.h */,
-				1B78165F197C3C150043664B /* GADGoogleOAuth.m */,
-			);
-			name = GoogleOAuth;
-			path = DayShare;
-			sourceTree = "<group>";
-		};
-		1B781662197C4AD60043664B /* ZHHHandyMacros */ = {
-			isa = PBXGroup;
-			children = (
-				1B781663197C4AD60043664B /* ZHHHandyMacros.h */,
-				1B781664197C4AD60043664B /* ZHHHandyMacros.m */,
-			);
-			path = ZHHHandyMacros;
 			sourceTree = "<group>";
 		};
 		CAB8A9AA19F32F65004019C5 /* CWStatusBarNotification */ = {
@@ -172,6 +153,11 @@
 				CLASSPREFIX = GAD;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "org-honghao";
+				TargetAttributes = {
+					1B781622197C39800043664B = {
+						DevelopmentTeam = X68PMPH73W;
+					};
+				};
 			};
 			buildConfigurationList = 1B78161E197C39800043664B /* Build configuration list for PBXProject "DayShare" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -196,9 +182,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA9364D319F583D4003CF366 /* Main.storyboard in Resources */,
 				1B78163F197C39800043664B /* Images.xcassets in Resources */,
 				1B781631197C39800043664B /* InfoPlist.strings in Resources */,
-				1B78163A197C39800043664B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,9 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B781633197C39800043664B /* main.m in Sources */,
-				1B781660197C3C150043664B /* GADGoogleOAuth.m in Sources */,
 				CAB8A9AD19F32F65004019C5 /* CWStatusBarNotification.m in Sources */,
-				1B781665197C4AD60043664B /* ZHHHandyMacros.m in Sources */,
 				CACD871719ECB8E00006DF4C /* DaySelectViewController.m in Sources */,
 				1B781637197C39800043664B /* GADAppDelegate.m in Sources */,
 			);
@@ -229,10 +213,10 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		1B781638197C39800043664B /* Main.storyboard */ = {
+		CA9364D119F583D4003CF366 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1B781639197C39800043664B /* Base */,
+				CA9364D219F583D4003CF366 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -315,10 +299,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DayShare/GoogleAuthDemo-Prefix.pch";
 				INFOPLIST_FILE = "DayShare/GoogleAuthDemo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -328,10 +315,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DayShare/GoogleAuthDemo-Prefix.pch";
 				INFOPLIST_FILE = "DayShare/GoogleAuthDemo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
