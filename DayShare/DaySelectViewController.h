@@ -23,7 +23,6 @@
 @property(nonatomic) NSString *timeZone;
 
 - (void)calculateFreeTime:(NSMutableArray *)startDates end:(NSMutableArray *)endDates;
-
 - (void)copyToClipboard:(NSString *)str;
 
 @end

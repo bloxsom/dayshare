@@ -272,26 +272,30 @@ int const NUM_DAYS_FOR_SELECT = 14;
     
     //Default free times are from 8am to 10pm, change this later.
     NSString *minTime = @"8:00AM";
-    NSString *maxTime = @"10:00PM";
+    NSString *maxTime = @"10:00PM.";
+    
+    //Sort the start/end times so they match. How to get rid of the warnings....
+    NSMutableArray *sortedStart = [startDates sortedArrayUsingSelector:@selector(compare:)];
+    NSMutableArray *sortedEnd = [endDates sortedArrayUsingSelector:@selector(compare:)];
     
     NSString *freeTimes = @"I am free from ";
     freeTimes = [freeTimes stringByAppendingString:minTime];
 
-    
     for (int i=0; i<[startDates count]; i++) {
-        NSString *formattedStart = [dateFormatter1 stringFromDate:[startDates objectAtIndex:i]];
-        NSString *formattedEnd = [dateFormatter1 stringFromDate:[endDates objectAtIndex:i]];
+        NSString *formattedStart = [dateFormatter1 stringFromDate:[sortedStart objectAtIndex:i]];
+        NSString *formattedEnd = [dateFormatter1 stringFromDate:[sortedEnd objectAtIndex:i]];
         
-        freeTimes = [freeTimes stringByAppendingString:[NSString stringWithFormat:@" to %@ and from %@",
-                                                        formattedStart, formattedEnd]];
+        if (i < [startDates count] - 1) {
+            freeTimes = [freeTimes stringByAppendingString:[NSString stringWithFormat:@" to %@, from %@",
+                                                            formattedStart, formattedEnd]];
+        } else {
+            freeTimes = [freeTimes stringByAppendingString:[NSString stringWithFormat:@" to %@, and from %@",
+                                                            formattedStart, formattedEnd]];
+        }
     }
     
     freeTimes = [freeTimes stringByAppendingString:@" to "];
     freeTimes = [freeTimes stringByAppendingString:maxTime];
-    
-    //To do: account for case where the end time goes later than the maxTime
-    //Figure out NSDateFormatter
-    //Option where users can choose when their default minTime & maxTimes are
     
     [self copyToClipboard:freeTimes];
 }
@@ -301,7 +305,6 @@ int const NUM_DAYS_FOR_SELECT = 14;
     NSLog(@"%@", str);
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = str;
-
 }
 
 @end
