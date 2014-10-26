@@ -16,6 +16,8 @@
 @implementation DaySelectViewController
 
 int const NUM_DAYS_FOR_SELECT = 14;
+int const FREE_HOUR_START = 8;
+int const FREE_HOUR_END = 20;
 
 - (void)viewDidLoad
 {
@@ -26,9 +28,7 @@ int const NUM_DAYS_FOR_SELECT = 14;
     
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
-//    UIEdgeInsets contentInset = _tableView.contentInset;
-//    contentInset.bottom = _toolBar.bounds.size.height;
-//    [_tableView setContentInset:contentInset];
+    
     _arrDayNameLabels = [[NSMutableArray alloc] init];
     _arrDayFullNameLabels = [[NSMutableArray alloc] init];
     _arrDays = [[NSMutableArray alloc] init];
@@ -36,32 +36,44 @@ int const NUM_DAYS_FOR_SELECT = 14;
     
     _notification = [CWStatusBarNotification new];
     _notification.notificationLabelBackgroundColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
-    
-    _googleOAuth = [[GADGoogleOAuth alloc] initWithFrame:self.view.frame];
-    [_googleOAuth setGOAuthDelegate:self];
 
     [self setupDates];
-    [self authorize];
+}
+
+-(NSArray*)fetchEventsForDate:(NSDate*)date {
+    EKEventStore *store = [[EKEventStore alloc] init];
+    // This prompts users for access to their calendars
+    // TODO: Add handling for declination
+    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        
+    }];
+    
+    // Get the appropriate calendar
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDate *beginDate = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:date options:0];
+    NSDate *endDate = [calendar dateBySettingHour:23 minute:59 second:59 ofDate:date options:0];
+    
+    // Create the predicate from the event store's instance method
+    NSPredicate *predicate = [store predicateForEventsWithStartDate:beginDate
+                                                            endDate:endDate
+                                                          calendars:nil];
+    
+    // Fetch all events that match the predicate
+    NSArray *events = [store eventsMatchingPredicate:predicate];
+    return events;
 }
 
 - (void)setupDates {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
     NSDate *now = [NSDate date];
     NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
     NSUInteger preservedComponents = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit);
     NSDate *date = [calendar dateFromComponents:[calendar components:preservedComponents fromDate:now]];
-    NSString *today = [dateFormatter stringFromDate:date];
     
     // Decompose the date corresponding to "now" into Year+Month+Day components
     NSUInteger units = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
     NSDateComponents *comps = [[NSCalendar currentCalendar] components:units fromDate:[NSDate date]];
     // Add one day
     comps.day = comps.day + 1; // no worries: even if it is the end of the month it will wrap to the next month, see doc
-    // Recompose a new date, without any time information (so this will be at midnight)
-    NSDate *tomorrowMidnight = [[NSCalendar currentCalendar] dateFromComponents:comps];
-    
-    NSString *tomorrow = [dateFormatter stringFromDate:tomorrowMidnight];
     
     NSDateFormatter *dayNameFormatter = [[NSDateFormatter alloc] init];
     [dayNameFormatter setDateFormat:@"EEEE"];
@@ -71,16 +83,13 @@ int const NUM_DAYS_FOR_SELECT = 14;
     [_arrDayNameLabels addObject: @"Today"];
     [_arrDayFullNameLabels addObject: [fullDayNameFormatter stringFromDate:date]];
     
-    [_arrDays addObject: [NSArray arrayWithObjects:today, tomorrow, nil]];
+    [_arrDays addObject: date];
     
     for (int i = 0; i < NUM_DAYS_FOR_SELECT; i++) {
         NSDate *current = [[NSCalendar currentCalendar] dateFromComponents:comps];
         comps.day = comps.day + 1;
-        NSDate *next = [[NSCalendar currentCalendar] dateFromComponents:comps];
         NSString *dayName = [dayNameFormatter stringFromDate:current];
-        NSString *currentString = [dateFormatter stringFromDate:current];
-        NSString *nextString = [dateFormatter stringFromDate:next];
-        [_arrDays addObject: [NSArray arrayWithObjects:currentString, nextString, nil]];
+        [_arrDays addObject: current];
         [_arrDayNameLabels addObject:dayName];
         [_arrDayFullNameLabels addObject: [fullDayNameFormatter stringFromDate:current]];
     }
@@ -101,20 +110,12 @@ int const NUM_DAYS_FOR_SELECT = 14;
     return [_arrDayNameLabels count];
 }
 
-- (void) authorize {
-    [_googleOAuth authorizeUserWithClienID:@"878770239271-p5cul9k5egrfn9t14rdtd1rtstb1cknn.apps.googleusercontent.com"
-                           andClientSecret:@"8nwUU5LwKQClq444o7Rbkjg7"
-                             andParentView:self.view
-                                 andScopes:[NSArray arrayWithObjects:@"https://www.googleapis.com/auth/calendar.readonly", nil]
-     ];
-}
 
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *)path {
-    NSInteger row = (NSInteger)path.row;
-    _timeStart = [_arrDays objectAtIndex:row][0];
-    _timeEnd = [_arrDays objectAtIndex:row][1];
     [tableView deselectRowAtIndexPath:path animated:true];
-    [self authorize];
+    NSInteger row = (NSInteger)path.row;
+    NSDate *date = [_arrDays objectAtIndex:row];
+    [self calculateFreeTimeForDate:date];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -145,101 +146,6 @@ int const NUM_DAYS_FOR_SELECT = 14;
     return 74.0;
 }
 
-- (IBAction)revokeAccess:(id)sender {
-    [_googleOAuth revokeAccessToken];
-}
-
--(void)fetchCalendarIDs {
-    [_googleOAuth callAPI:@"https://www.googleapis.com/calendar/v3/users/me/calendarList"
-           withHttpMethod:httpMethod_GET
-       postParameterNames:nil postParameterValues:nil];
-}
-
--(void)fetchFreeBusy {
-    NSTimeZone *currentTimeZone = [NSTimeZone localTimeZone];
-    [currentTimeZone name];
-    NSString *timeZone = [[NSTimeZone localTimeZone] name];
-    
-    NSMutableString *calIds = [[NSMutableString alloc] init];
-    [calIds appendString:@"["];
-    for (int i = 0; i < [_arrCalendarIds count]; i++) {
-        NSString *curr = [NSString stringWithFormat: @"{\"id\":\"%@\"}", [_arrCalendarIds objectAtIndex:i]];
-        if (i > 0) {
-            [calIds appendString:@","];
-        }
-        [calIds appendString:curr];
-    }
-    [calIds appendString:@"]"];
-    
-    
-    NSArray *values = [NSArray arrayWithObjects:calIds, _timeStart, _timeEnd, timeZone, nil];
-    NSArray *params = [NSArray arrayWithObjects:@"items", @"timeMin", @"timeMax", @"timeZone", nil];
-    [_googleOAuth callAPI:@"https://www.googleapis.com/calendar/v3/freeBusy"
-           withHttpMethod:httpMethod_POST
-       postParameterNames:params postParameterValues: values];
-}
-
--(void)authorizationWasSuccessful{
-    if ([_arrCalendarIds count] == 0) {
-        [self fetchCalendarIDs];
-    } else {
-        [self fetchFreeBusy];
-    }
-}
-
--(void)accessTokenWasRevoked{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
-                                                    message:@"Your access was revoked!"
-                                                   delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-    [alert show];
-    
-    [_tableView reloadData];
-}
-
--(void)errorOccuredWithShortDescription:(NSString *)errorShortDescription andErrorDetails:(NSString *)errorDetails{
-    NSLog(@"%@", errorShortDescription);
-    NSLog(@"%@", errorDetails);
-}
-
-
--(void)errorInResponseWithBody:(NSString *)errorMessage{
-    NSLog(@"%@", errorMessage);
-}
-
--(void)handleFreeBusyResponse:(NSMutableDictionary*)response {
-    //Dictionary containing calendar object
-    NSMutableDictionary *calendars = [response valueForKey:@"calendars"];
-    
-    //Collect the busy start/end pairs
-    NSMutableArray *busyTimes = [[NSMutableArray alloc] init];
-    for (id calendarKey in calendars) {
-        NSMutableDictionary *calendar = [calendars objectForKey:calendarKey];
-        NSMutableArray *pairs = [calendar objectForKey:@"busy"];
-        for (NSMutableDictionary *pair in pairs) {
-            [busyTimes addObject: pair];
-        }
-        
-    }
-    
-    NSDateFormatter *dateFormatter0 = [[NSDateFormatter alloc] init];
-    [dateFormatter0 setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
-    
-    //Arrays of NSDates
-    NSMutableArray *startDates = [[NSMutableArray alloc] init];
-    NSMutableArray *endDates = [[NSMutableArray alloc] init];
-    
-    for (int i=0; i<[busyTimes count]; i++) {
-        NSString *startString = [[busyTimes objectAtIndex:i] valueForKey:@"start"];
-        NSString *endString = [[busyTimes objectAtIndex:i] valueForKey:@"end"];
-        NSDate *timeStart = [dateFormatter0 dateFromString:startString];
-        NSDate *timeEnd = [dateFormatter0 dateFromString:endString];
-        
-        [startDates addObject: timeStart];
-        [endDates addObject: timeEnd];
-    }
-    
-    [self calculateFreeTime:startDates end:endDates];
-}
 
 -(void)handleCalendarResponse:(NSMutableDictionary*)response {
     NSMutableArray *calendarsArray = [response valueForKey:@"items"];
@@ -249,55 +155,109 @@ int const NUM_DAYS_FOR_SELECT = 14;
     }
 }
 
--(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
-    
-    //Dictionary containing calendar obj, kind (calendar#freeBusy), timeMax, timeMin
-    NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData
-                                                                options:NSJSONReadingMutableContainers
-                                                                  error:nil];
-    if ([[dict valueForKey:@"kind"] isEqual:@"calendar#calendarList"]) {
-        [self handleCalendarResponse:dict];
-        if (_timeStart && _timeEnd) {
-            [self fetchFreeBusy];
-        }
-    } else if ([[dict valueForKey:@"kind"] isEqual:@"calendar#freeBusy"]) {
-        [self handleFreeBusyResponse:dict];
-    }
-
+-(void) calculateFreeTimeForDate:(NSDate*)date {
+    NSArray *events = [self fetchEventsForDate:date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDate *startDate = [calendar dateBySettingHour:FREE_HOUR_START minute:0 second:0 ofDate:date options:0];
+    NSDate *endDate = [calendar dateBySettingHour:FREE_HOUR_END minute:0 second:0 ofDate:date options:0];
+    NSDate *methodStart = [NSDate date];
+    NSMutableArray *freeTimes = [self findFreeTimesFromDate:startDate toDate:endDate withEvents:events];
+    NSDate *methodFinish = [NSDate date];
+    NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
+    NSLog(@"executionTime = %f", executionTime);
+    [self printFreeTimes:freeTimes];
 }
 
-- (void)calculateFreeTime:(NSMutableArray *)startDates end:(NSMutableArray *)endDates {
-    NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
-    [dateFormatter1 setDateFormat:@"h:mma"];
-    
-    //Default free times are from 8am to 10pm, change this later.
-    NSString *minTime = @"8:00AM";
-    NSString *maxTime = @"10:00PM.";
-    
-    //Sort the start/end times so they match. How to get rid of the warnings....
-    NSMutableArray *sortedStart = [startDates sortedArrayUsingSelector:@selector(compare:)];
-    NSMutableArray *sortedEnd = [endDates sortedArrayUsingSelector:@selector(compare:)];
-    
-    NSString *freeTimes = @"I am free from ";
-    freeTimes = [freeTimes stringByAppendingString:minTime];
+- (NSMutableArray*)findFreeTimesFromDate:(NSDate*)startDate toDate:(NSDate*)endDate withEvents:(NSArray*)events {
+    NSMutableArray *freeTimes = [[NSMutableArray alloc] init];
+    NSDate *freeEnd, *freeStart;
+    freeEnd = [startDate dateByAddingTimeInterval:0];
+    do {
+        freeStart = [self findNextFreeTimeFromDate:freeEnd toDate:endDate withEvents:events];
+        if (freeStart == nil) {
+            break;
+        }
+        freeEnd = [self findNextBusyTimeFromDate:freeStart toDate:endDate withEvents:events];
+        if (freeEnd == nil) {
+            freeEnd = [endDate dateByAddingTimeInterval:0];
+            [freeTimes addObject:[NSDictionary dictionaryWithObjectsAndKeys:freeStart, @"freeStart", freeEnd, @"freeEnd", nil]];
+            break;
+        }
+        [freeTimes addObject:[NSDictionary dictionaryWithObjectsAndKeys:freeStart, @"freeStart", freeEnd, @"freeEnd", nil]];
+    } while (true);
+    return freeTimes;
+}
 
-    for (int i=0; i<[startDates count]; i++) {
-        NSString *formattedStart = [dateFormatter1 stringFromDate:[sortedStart objectAtIndex:i]];
-        NSString *formattedEnd = [dateFormatter1 stringFromDate:[sortedEnd objectAtIndex:i]];
-        
-        if (i < [startDates count] - 1) {
-            freeTimes = [freeTimes stringByAppendingString:[NSString stringWithFormat:@" to %@, from %@",
-                                                            formattedStart, formattedEnd]];
-        } else {
-            freeTimes = [freeTimes stringByAppendingString:[NSString stringWithFormat:@" to %@, and from %@",
-                                                            formattedStart, formattedEnd]];
+
+- (NSDate*)findNextFreeTimeFromDate:(NSDate*)startDate toDate:(NSDate*)endDate withEvents:(NSArray*)events {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSHourCalendarUnit+NSMinuteCalendarUnit fromDate:startDate];
+    for (NSInteger i = [components hour]; i < 23; i++) {
+        for (NSInteger j = (i == [components hour]) ? [components minute] : 0; j < 59; j += 15) {
+            NSDate *current = [calendar dateBySettingHour:i minute:j second:1 ofDate:startDate options:0];
+            bool noBusy = true;
+            // If we pass the endDate return nil because there are no more free times
+            // The caller of this function should handle nils accordingly
+            if (![self date:current isBetweenDate:startDate andDate:endDate]) {
+                return nil;
+            }
+            for (int k = 0; k < [events count]; k++) {
+                EKEvent *event = [events objectAtIndex:k];
+                if (!event.allDay && event.availability == EKEventAvailabilityBusy && [self date:current isBetweenDate:[event startDate] andDate:[event endDate]]) {
+                    noBusy = false;
+                }
+            }
+            if (noBusy) {
+                return current;
+            }
         }
     }
-    
-    freeTimes = [freeTimes stringByAppendingString:@" to "];
-    freeTimes = [freeTimes stringByAppendingString:maxTime];
-    
-    [self copyToClipboard:freeTimes];
+    return nil;
+}
+
+- (NSDate*)findNextBusyTimeFromDate:(NSDate*)startDate toDate:(NSDate*)endDate withEvents:(NSArray*)events {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSHourCalendarUnit+NSMinuteCalendarUnit fromDate:startDate];
+    for (NSInteger i = [components hour]; i < 23; i++) {
+        for (NSInteger j = (i == [components hour]) ? [components minute] : 0; j < 59; j += 15) {
+            NSDate *current = [calendar dateBySettingHour:i minute:j second:1 ofDate:startDate options:0];
+            // If we pass the endDate return nil because there are no more busy times in the given interval
+            // The caller of this function should handle nils accordingly
+            if (![self date:current isBetweenDate:startDate andDate:endDate]) {
+                return nil;
+            }
+            for (int k = 0; k < [events count]; k++) {
+                EKEvent *event = [events objectAtIndex:k];
+                if (!event.allDay && event.availability == EKEventAvailabilityBusy && [self date:current isBetweenDate:[event startDate] andDate:[event endDate]]) {
+                    return current;
+                }
+            }
+        }
+    }
+    return nil;
+}
+
+- (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate {
+    if ([date compare:beginDate] == NSOrderedAscending)
+        return NO;
+    if ([date compare:endDate] == NSOrderedDescending)
+        return NO;
+    return YES;
+}
+
+- (void)printFreeTimes:(NSMutableArray *)freeTimes {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"h:mma"];
+    NSString *freeString = @"Free between";
+    for (int i = 0; i < [freeTimes count]; i++) {
+        NSString *formattedStart = [dateFormatter stringFromDate:[[freeTimes objectAtIndex:i] valueForKey:@"freeStart"]];
+        NSString *formattedEnd = [dateFormatter stringFromDate:[[freeTimes objectAtIndex:i] valueForKey:@"freeEnd"]];
+        freeString = [freeString stringByAppendingString:[NSString stringWithFormat:@" %@ and %@", formattedStart, formattedEnd]];
+        if (i < [freeTimes count] - 1) {
+            freeString = [freeString stringByAppendingString:@","];
+        }
+    }
+    [self copyToClipboard:freeString];
 }
 
 - (void)copyToClipboard:(NSString *)str {
