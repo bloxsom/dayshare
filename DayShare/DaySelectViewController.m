@@ -193,7 +193,7 @@ int const FREE_HOUR_END = 20;
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:NSHourCalendarUnit+NSMinuteCalendarUnit fromDate:startDate];
     for (NSInteger i = [components hour]; i < 23; i++) {
-        for (NSInteger j = [components minute]; j < 59; j += 15) {
+        for (NSInteger j = (i == [components hour]) ? [components minute] : 0; j < 59; j += 15) {
             NSDate *current = [calendar dateBySettingHour:i minute:j second:1 ofDate:startDate options:0];
             bool noBusy = true;
             // If we pass the endDate return nil because there are no more free times
@@ -219,7 +219,7 @@ int const FREE_HOUR_END = 20;
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:NSHourCalendarUnit+NSMinuteCalendarUnit fromDate:startDate];
     for (NSInteger i = [components hour]; i < 23; i++) {
-        for (NSInteger j = [components minute]; j < 59; j += 15) {
+        for (NSInteger j = (i == [components hour]) ? [components minute] : 0; j < 59; j += 15) {
             NSDate *current = [calendar dateBySettingHour:i minute:j second:1 ofDate:startDate options:0];
             // If we pass the endDate return nil because there are no more busy times in the given interval
             // The caller of this function should handle nils accordingly
