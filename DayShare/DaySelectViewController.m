@@ -24,7 +24,12 @@ int const FREE_HOUR_END = 20;
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.navigationItem.title = @"Select a Day";
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                     [UIFont fontWithName:@"Menlo-Bold"
+                                                                    size:16.0], UITextAttributeFont, nil]];
+    
+    
+    self.navigationItem.title = @"SELECT A DAY";
     
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
@@ -78,20 +83,30 @@ int const FREE_HOUR_END = 20;
     NSDateFormatter *dayNameFormatter = [[NSDateFormatter alloc] init];
     [dayNameFormatter setDateFormat:@"EEEE"];
     NSDateFormatter *fullDayNameFormatter = [[NSDateFormatter alloc] init];
-    [fullDayNameFormatter setDateFormat:@"MMMM d"];
+    [fullDayNameFormatter setDateFormat:@"MMM d"];
     
-    [_arrDayNameLabels addObject: @"Today"];
-    [_arrDayFullNameLabels addObject: [fullDayNameFormatter stringFromDate:date]];
+    [_arrDayNameLabels addObject: @"TODAY"];
+    
+    NSString *date1 = [fullDayNameFormatter stringFromDate:date];
+    NSString *dateName = [date1 uppercaseString];
+    [_arrDayFullNameLabels addObject:dateName];
     
     [_arrDays addObject: date];
     
     for (int i = 0; i < NUM_DAYS_FOR_SELECT; i++) {
         NSDate *current = [[NSCalendar currentCalendar] dateFromComponents:comps];
         comps.day = comps.day + 1;
-        NSString *dayName = [dayNameFormatter stringFromDate:current];
+        NSString *day = [dayNameFormatter stringFromDate:current];
+        NSString *dayName = [day uppercaseString];
+        NSString *date = [fullDayNameFormatter stringFromDate:current];
+        NSString *dateName = [date uppercaseString];
+        
         [_arrDays addObject: current];
         [_arrDayNameLabels addObject:dayName];
-        [_arrDayFullNameLabels addObject: [fullDayNameFormatter stringFromDate:current]];
+        [_arrDayFullNameLabels addObject:dateName];
+        
+        
+//        [_arrDayFullNameLabels addObject: [fullDayNameFormatter stringFromDate:current]];
     }
     
 }
@@ -123,21 +138,58 @@ int const FREE_HOUR_END = 20;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: CellIdentifier];
     
     if (cell == nil) {
+        
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         
+//        textLabel.textAlignment = UITextAlignmentCenter;
+
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    
+
         [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
         [cell setAccessoryType:UITableViewCellAccessoryNone];
         
-        [[cell textLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:24.0]];
-        [[cell textLabel] setShadowOffset:CGSizeMake(1.0, 1.0)];
-        [[cell textLabel] setShadowColor:[UIColor whiteColor]];
+        [[cell textLabel] setFont:[UIFont fontWithName:@"Menlo-Bold" size:24.0]];
+        [[cell textLabel] setTextColor:[UIColor whiteColor]];
+//        
+//        [[cell detailTextLabel] setFont:[UIFont fontWithName:@"Menlo-Regular" size:14.0]];
+//        [[cell detailTextLabel] setTextColor:[UIColor whiteColor]];
         
-        [[cell detailTextLabel] setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0]];
-        [[cell detailTextLabel] setTextColor:[UIColor grayColor]];
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
     }
     
-    [[cell textLabel] setText:[_arrDayNameLabels objectAtIndex:[indexPath row]]];
-    [[cell detailTextLabel] setText:[_arrDayFullNameLabels objectAtIndex:[indexPath row]]];
+    NSString *day = [_arrDayNameLabels objectAtIndex:[indexPath row]];
+    NSString *date = [_arrDayFullNameLabels objectAtIndex:[indexPath row]];
+    
+    NSString *text = [NSString stringWithFormat:@"%@ %@", day, date];
+    
+    [[cell textLabel] setText:text];
+
+    
+//    [[cell textLabel] setText:[_arrDayNameLabels objectAtIndex:[indexPath row]]];
+//    [[cell detailTextLabel] setText:[_arrDayFullNameLabels objectAtIndex:[indexPath row]]];
+    
+//    pretty colors!
+    NSArray *colors = [[NSArray alloc] initWithObjects:
+                     [UIColor colorWithRed:28/255.0f green:249/255.0f blue:212/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:29/255.0f green:228/255.0f blue:219/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:31/255.0f green:208/255.0f blue:226/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:32/255.0f green:187/255.0f blue:233/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:34/255.0f green:167/255.0f blue:240/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:35/255.0f green:146/255.0f blue:247/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:79/255.0f green:135/255.0f blue:220/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:114/255.0f green:126/255.0f blue:199/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:149/255.0f green:117/255.0f blue:178/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:220/255.0f green:99/255.0f blue:135/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:255/255.0f green:90/255.0f blue:114/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:255/255.0f green:106/255.0f blue:98/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:255/255.0f green:100/255.0f blue:84/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:255/255.0f green:77/255.0f blue:77/255.0f alpha:1.0f],
+                     [UIColor colorWithRed:255/255.0f green:51/255.0f blue:51/255.0f alpha:1.0f], nil];
+    
+    cell.backgroundColor = [colors objectAtIndex:indexPath.row];
     
     return cell;
 }

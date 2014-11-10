@@ -153,7 +153,7 @@
 				ORGANIZATIONNAME = "org-honghao";
 				TargetAttributes = {
 					1B781622197C39800043664B = {
-						DevelopmentTeam = X68PMPH73W;
+						DevelopmentTeam = 6V6CG978VS;
 					};
 				};
 			};
