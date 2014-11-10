@@ -25,7 +25,7 @@ int const FREE_HOUR_END = 20;
     // Do any additional setup after loading the view, typically from a nib.
     
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                     [UIFont fontWithName:@"Menlo-Bold" size:16.0], UITextAttributeFont, nil]];
+                                                                     [UIFont fontWithName:@"Menlo-Bold" size:16.0], NSFontAttributeName, nil]];
     
     
     self.navigationItem.title = @"SELECT A DAY";
