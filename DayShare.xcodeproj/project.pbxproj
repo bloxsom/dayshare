@@ -14,6 +14,7 @@
 		1B781633197C39800043664B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781632197C39800043664B /* main.m */; };
 		1B781637197C39800043664B /* GADAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B781636197C39800043664B /* GADAppDelegate.m */; };
 		1B78163F197C39800043664B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B78163E197C39800043664B /* Images.xcassets */; };
+		C3B1B0411A130C1000759CE2 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3B1B0401A130C1000759CE2 /* SettingsViewController.m */; };
 		CA6DD82219F49E9D006F17CC /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA6DD82119F49E9D006F17CC /* EventKit.framework */; };
 		CA6DD82419F49EB6006F17CC /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA6DD82319F49EB6006F17CC /* EventKitUI.framework */; };
 		CA9364D319F583D4003CF366 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA9364D119F583D4003CF366 /* Main.storyboard */; };
@@ -33,6 +34,8 @@
 		1B781635197C39800043664B /* GADAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADAppDelegate.h; sourceTree = "<group>"; };
 		1B781636197C39800043664B /* GADAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GADAppDelegate.m; sourceTree = "<group>"; };
 		1B78163E197C39800043664B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C3B1B03F1A130C1000759CE2 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		C3B1B0401A130C1000759CE2 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		CA6DD82119F49E9D006F17CC /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		CA6DD82319F49EB6006F17CC /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		CA9364D219F583D4003CF366 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -96,9 +99,10 @@
 				1B781636197C39800043664B /* GADAppDelegate.m */,
 				CACD871819ECB8F20006DF4C /* DaySelectViewController.h */,
 				CACD871619ECB8E00006DF4C /* DaySelectViewController.m */,
+				C3B1B03F1A130C1000759CE2 /* SettingsViewController.h */,
+				C3B1B0401A130C1000759CE2 /* SettingsViewController.m */,
 				1B78163E197C39800043664B /* Images.xcassets */,
 				1B78162D197C39800043664B /* Supporting Files */,
-				1B781661197C3C190043664B /* GoogleOAuth */,
 			);
 			path = DayShare;
 			sourceTree = "<group>";
@@ -196,6 +200,7 @@
 			files = (
 				1B781633197C39800043664B /* main.m in Sources */,
 				CAB8A9AD19F32F65004019C5 /* CWStatusBarNotification.m in Sources */,
+				C3B1B0411A130C1000759CE2 /* SettingsViewController.m in Sources */,
 				CACD871719ECB8E00006DF4C /* DaySelectViewController.m in Sources */,
 				1B781637197C39800043664B /* GADAppDelegate.m in Sources */,
 			);

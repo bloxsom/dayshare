@@ -8,6 +8,7 @@
 
 #import "DaySelectViewController.h"
 #import "CWStatusBarNotification.h"
+#import "SettingsViewController.h"
 
 @interface DaySelectViewController ()
 
@@ -24,11 +25,26 @@ int const FREE_HOUR_END = 20;
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                     [UIFont fontWithName:@"Menlo-Bold" size:16.0], NSFontAttributeName, nil]];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Menlo-Bold" size:20.0],
+                                    NSFontAttributeName, nil]];
     
+    //Hides back button that shows up when you come back from the segue
+    self.navigationItem.hidesBackButton = YES;
     
+    //Sets up title & settings button with correct fonts, etc.
+    //Should this code even go here? Or do you declare buttons and stuff in the .h file?????
     self.navigationItem.title = @"SELECT A DAY";
+    
+    UIBarButtonItem *settings_button = [[UIBarButtonItem alloc]initWithTitle:@"SETTINGS" style:UIBarButtonItemStylePlain target:self action:@selector(go_to_settings)];
+    
+    [settings_button setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                     [UIFont fontWithName:@"Menlo-Bold" size:10.0], NSFontAttributeName,
+                                     [UIColor blackColor], NSForegroundColorAttributeName,
+                                     nil]
+                           forState:UIControlStateNormal];
+
+    
+    self.navigationItem.rightBarButtonItem = settings_button;
     
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
@@ -42,6 +58,11 @@ int const FREE_HOUR_END = 20;
     _notification.notificationLabelBackgroundColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
     
     [self setupDates];
+}
+
+-(void)go_to_settings
+{
+    [self performSegueWithIdentifier:@"settings" sender:nil];
 }
 
 -(NSArray*)fetchEventsForDate:(NSDate*)date {
@@ -147,8 +168,6 @@ int const FREE_HOUR_END = 20;
         
         [[cell textLabel] setFont:[UIFont fontWithName:@"Menlo-Bold" size:24.0]];
         [[cell textLabel] setTextColor:[UIColor whiteColor]];
-        
-        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
     }
     
@@ -306,8 +325,9 @@ int const FREE_HOUR_END = 20;
     NSLog(@"%@", str);
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = str;
-    
 }
+
+
 
 @end
 
