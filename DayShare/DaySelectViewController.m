@@ -17,8 +17,9 @@
 @implementation DaySelectViewController
 
 int const NUM_DAYS_FOR_SELECT = 14;
-int const FREE_HOUR_START = 8;
-int const FREE_HOUR_END = 20;
+//int free_hour_start;
+//NSInteger *free_hour_start;
+//int free_hour_end = 20;
 
 - (void)viewDidLoad
 {
@@ -38,7 +39,7 @@ int const FREE_HOUR_END = 20;
     UIBarButtonItem *settings_button = [[UIBarButtonItem alloc]initWithTitle:@"SETTINGS" style:UIBarButtonItemStylePlain target:self action:@selector(go_to_settings)];
     
     [settings_button setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     [UIFont fontWithName:@"Menlo-Bold" size:10.0], NSFontAttributeName,
+                                     [UIFont fontWithName:@"Menlo" size:10.0], NSFontAttributeName,
                                      [UIColor blackColor], NSForegroundColorAttributeName,
                                      nil]
                            forState:UIControlStateNormal];
@@ -56,6 +57,12 @@ int const FREE_HOUR_END = 20;
     
     _notification = [CWStatusBarNotification new];
     _notification.notificationLabelBackgroundColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+    
+    //If user has not updated settings, set defaults
+    if (_free_hour_start == NULL){
+        _free_hour_start = 8;
+        _free_hour_end = 20;
+    }
     
     [self setupDates];
 }
@@ -218,8 +225,8 @@ int const FREE_HOUR_END = 20;
 -(void) calculateFreeTimeForDate:(NSDate*)date {
     NSArray *events = [self fetchEventsForDate:date];
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDate *startDate = [calendar dateBySettingHour:FREE_HOUR_START minute:0 second:0 ofDate:date options:0];
-    NSDate *endDate = [calendar dateBySettingHour:FREE_HOUR_END minute:0 second:0 ofDate:date options:0];
+    NSDate *startDate = [calendar dateBySettingHour:_free_hour_start minute:_free_minute_start second:0 ofDate:date options:0];
+    NSDate *endDate = [calendar dateBySettingHour:_free_hour_end minute:_free_minute_end second:0 ofDate:date options:0];
     NSDate *methodStart = [NSDate date];
     NSMutableArray *freeTimes = [self findFreeTimesFromDate:startDate toDate:endDate withEvents:events];
     NSDate *methodFinish = [NSDate date];
@@ -232,6 +239,7 @@ int const FREE_HOUR_END = 20;
     NSMutableArray *freeTimes = [[NSMutableArray alloc] init];
     NSDate *freeEnd, *freeStart;
     freeEnd = [startDate dateByAddingTimeInterval:0];
+    
     do {
         freeStart = [self findNextFreeTimeFromDate:freeEnd toDate:endDate withEvents:events];
         if (freeStart == nil) {
@@ -306,6 +314,8 @@ int const FREE_HOUR_END = 20;
 }
 
 - (void)printFreeTimes:(NSMutableArray *)freeTimes {
+    
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"h:mma"];
     NSString *freeString = @"Free between";
@@ -326,8 +336,6 @@ int const FREE_HOUR_END = 20;
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = str;
 }
-
-
 
 @end
 

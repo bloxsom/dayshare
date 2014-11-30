@@ -18,6 +18,12 @@
 @property(nonatomic) NSString *timeEnd;
 @property(nonatomic) NSString *timeZone;
 
+@property(nonatomic) NSInteger *free_hour_start;
+@property(nonatomic) NSInteger *free_minute_start;
+@property(nonatomic) NSInteger *free_hour_end;
+@property(nonatomic) NSInteger *free_minute_end;
+
 - (void)copyToClipboard:(NSString *)str;
 
 @end
+
