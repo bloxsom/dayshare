@@ -64,6 +64,13 @@ int const NUM_DAYS_FOR_SELECT = 14;
         _free_hour_end = 20;
     }
     
+    EKEventStore *store = [[EKEventStore alloc] init];
+    // This prompts users for access to their calendars
+    // TODO: Add handling for declination
+    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        
+    }];
+
     [self setupDates];
 }
 
