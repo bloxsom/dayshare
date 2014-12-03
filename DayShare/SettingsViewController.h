@@ -12,14 +12,18 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *startText;
 @property (weak, nonatomic) IBOutlet UITextField *endText;
+@property (weak, nonatomic) IBOutlet UITextField *bufferTime;
 
 @property(nonatomic) NSInteger *free_hour_start;
 @property(nonatomic) NSInteger *free_minute_start;
 @property(nonatomic) NSInteger *free_hour_end;
 @property(nonatomic) NSInteger *free_minute_end;
+@property(nonatomic) NSMutableArray *buffer_times;
 
 @end
 
 UIDatePicker *datePicker;
 UIDatePicker *datePicker2;
+
+UIPickerView *bufferValues;
 

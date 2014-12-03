@@ -84,6 +84,11 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xPE-jM-aL3">
+                                <rect key="frame" x="92" y="248" width="141" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.49024161816267142" green="0.8340709434874034" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -91,6 +96,7 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="bufferTime" destination="xPE-jM-aL3" id="odE-5n-cvd"/>
                         <outlet property="endText" destination="PQw-dk-yYe" id="5fR-He-kCy"/>
                         <outlet property="startText" destination="7So-nY-h0N" id="vYT-hF-pNQ"/>
                         <segue destination="6vu-4K-IbZ" kind="push" identifier="back" id="eeO-J9-h3F"/>

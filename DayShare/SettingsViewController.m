@@ -64,6 +64,9 @@
     NSString *defaultStart = @"08:00 am";
     NSString *defaultEnd = @"08:00 pm";
     
+    NSString *defaultBuffer = @"0 minutes";
+    _bufferTime.text = defaultBuffer;
+    
     NSDate *defaultStartTime = [formatter dateFromString:defaultStart];
     NSDate *defaultEndTime = [formatter dateFromString:defaultEnd];
     
@@ -72,13 +75,51 @@
     
     _startText.text = [formatter stringFromDate:datePicker.date];
     _endText.text = [formatter stringFromDate:datePicker2.date];
+    
+    //Declare picker for buffer time
+    
+    bufferValues = [[UIPickerView alloc] init];
+    _bufferTime.inputView = bufferValues;
+    
+    _buffer_times = [[NSMutableArray alloc] init];
+    [_buffer_times addObject:@"0 minutes"];
+    [_buffer_times addObject:@"5 minutes"];
+    [_buffer_times addObject:@"10 minutes"];
+    [_buffer_times addObject:@"15 minutes"];
+    [_buffer_times addObject:@"30 minutes"];
+    [_buffer_times addObject:@"1 hour"];
+    
+    bufferValues.delegate = self;
+    bufferValues.dataSource = self;
+    
+//    [self reloadAllComponents];
+    
+//    NSLog(@"selected component is: %@", [bufferValues selectedRowInComponent:0]);
 
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)bufferValues {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)bufferValues numberOfRowsInComponent:(NSInteger)component {
+    return [_buffer_times count];
+}
+
+- (NSString *)pickerView:(UIPickerView *)bufferValues titleForRow:(NSInteger)row forComponent:(NSInteger)component { // This method asks for what the title or label of each row will be.
+    return [_buffer_times objectAtIndex:row];
+}
+
+-(void)reloadAllComponents {
+    [bufferValues reloadAllComponents];
 }
 
 -(void)dismissKeyboard{
     [_startText resignFirstResponder];
     [_endText resignFirstResponder];
+    [_bufferTime resignFirstResponder];
     [self dateUpdated:(datePicker) endPicker:(datePicker2)];
+    [self bufferUpdated];
 }
 
 - (void) dateUpdated:(UIDatePicker *)datePicker endPicker:(UIDatePicker *)datePicker2 {
@@ -86,6 +127,13 @@
     [formatter setDateFormat:@"hh:mma"];
     _startText.text = [formatter stringFromDate:datePicker.date];
     _endText.text = [formatter stringFromDate:datePicker2.date];
+}
+
+-(void)bufferUpdated {
+    NSInteger x = [bufferValues selectedRowInComponent:0];
+    NSLog(@"selected component is: %d", x);
+    NSString *time = [_buffer_times objectAtIndex:x];
+    _bufferTime.text = time;
 }
 
 -(void)back_to_dayselect
