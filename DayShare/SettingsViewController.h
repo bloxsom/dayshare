@@ -20,6 +20,8 @@
 @property(nonatomic) NSInteger *free_minute_end;
 @property(nonatomic) NSMutableArray *buffer_times;
 
+@property(nonatomic) NSInteger *buffer_time;
+
 @end
 
 UIDatePicker *datePicker;

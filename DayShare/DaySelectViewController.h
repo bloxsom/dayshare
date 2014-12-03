@@ -23,6 +23,8 @@
 @property(nonatomic) NSInteger *free_hour_end;
 @property(nonatomic) NSInteger *free_minute_end;
 
+@property(nonatomic) NSInteger *buffer_time;
+
 - (void)copyToClipboard:(NSString *)str;
 
 @end

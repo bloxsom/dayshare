@@ -131,7 +131,6 @@
 
 -(void)bufferUpdated {
     NSInteger x = [bufferValues selectedRowInComponent:0];
-    NSLog(@"selected component is: %d", x);
     NSString *time = [_buffer_times objectAtIndex:x];
     _bufferTime.text = time;
 }
@@ -159,6 +158,17 @@
     
     _free_hour_end = hr + 12;
     _free_minute_end = min;
+    
+    NSString *buffer_str = _bufferTime.text;
+    NSString *str = [buffer_str substringToIndex:2];
+    int buffer_int = [str intValue];
+    
+    //If buffer time is 1hr, make it 60
+    if (buffer_int == 1){
+        buffer_int += 59;
+    }
+    
+    _buffer_time = buffer_int;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -171,6 +181,7 @@
     controller.free_minute_start = _free_minute_start;
     controller.free_hour_end = _free_hour_end;
     controller.free_minute_end = _free_minute_end;
+    controller.buffer_time = _buffer_time;
 }
 
 - (void)didReceiveMemoryWarning {
